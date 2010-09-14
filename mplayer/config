@@ -1,0 +1,4 @@
+# alsa for linux, oss for bsd
+#ao = alsa
+stop-xscreensaver = "yes"
+heartbeat-cmd="xscreensaver-command -deactivate &" 

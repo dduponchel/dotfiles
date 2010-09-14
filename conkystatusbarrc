@@ -1,0 +1,89 @@
+background no
+out_to_console yes
+out_to_x no
+
+# Update interval in seconds
+update_interval 1.0
+
+# Set to zero to run forever.
+total_run_times 0
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# number of net samples to average
+# set to 1 to disable averaging
+net_avg_samples 2
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale yes
+
+TEXT
+color_image="^fg(\#FFF)"
+color_text="^fg(\#9CF)"
+color_up="^fg(\#F88)"
+color_down="^fg(\#8F8)"
+
+image () {
+	print "^i(.dzen/$$1.xbm)"
+}
+
+interface () {
+	addr=$$1
+	up=$$2
+	down=$$3
+	image=$$4
+
+	if [ -n "$$addr" -a "$$addr" != "No Address" ]
+	then
+		echo -n "$$color_image`image $$image`"
+		echo -n "$${color_text}$$down$${color_down}`image down`"
+		echo -n "$${color_text}/"
+		echo -n "$${color_text}$$up$${color_up}`image up`$${color_text} "
+	fi
+}
+
+# LOAD
+#echo -n "$$color_image`image load`$${color_text}${loadavg 1} "
+
+# CPU
+echo -n "$$color_image`image cpu`$${color_text}${cpu cpu1}% "
+
+# RAM
+#echo -n "$$color_image`image mem`$${color_text}${memperc}% "
+
+# POWER
+${if_match "${acpiacadapter}" != "no ac_adapters?"}
+	${if_match "${sysname}" == "FreeBSD"}
+		bat_adapter="$apm_adapter"
+		# bug ? the next $apm_* is "ERR"...
+		echo -n "$apm_adapter" > /dev/null
+		bat_percent="$apm_battery_life"
+		bat_time="$apm_battery_time"
+	$else
+		bat_adapter="$acpiacadapter"
+		bat_percent="$battery_percent"
+		bat_time="$battery_time"
+	$endif
+
+	if [ "$$bat_adapter" = "off-line" ]
+	then
+		echo -n "$$color_image`image power-bat`$${color_text}"
+	else
+		echo -n "$$color_image`image power-ac`$${color_text}"
+	fi
+	echo -n "$${bat_percent%\%}% "
+	[ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || echo -n "= $${bat_time%m*} "
+
+$endif
+
+# NET
+interface "${addr eth0}" "${downspeed eth0}" "${upspeed eth0}" "net-wired"
+interface "${addr em0}" "${downspeed em0}" "${upspeed em0}" "net-wired"
+interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "net-wifi4"
+
+# DATE
+echo -n "$$color_image`image clock`$${color_text}${time %k:%M:%S %d/%m/%Y}"
+
+echo

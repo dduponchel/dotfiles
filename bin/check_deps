@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+C_SEPARATOR="\033[1;34;40m"
+C_FAIL="\033[1;31;40m"
+C_OK="\033[0;37;40m"
+C_HEADER="\033[1;37;40m"
+C_CLEAR="\033[1;0m"
+
+# ok_failed(error, description)
+ok_failed() {
+	local error=$1
+	local description=$2
+
+	if [ $error == 0 ]; then
+		printf "${C_SEPARATOR}[${C_OK}  OK  ${C_SEPARATOR}]${C_CLEAR}"
+	else
+		printf "${C_SEPARATOR}[${C_FAIL} FAIL ${C_SEPARATOR}]${C_CLEAR}"
+	fi
+	printf " $description\n"
+}
+
+# TODO multiple prgm
+# check_installed(prg_name, cmd_name=prg_name)
+check_installed() {
+	local prg_name=${1}
+	local cmd_name=${2:-$1}
+
+	command -v $cmd_name > /dev/null
+	ok_failed $? "$prg_name"
+}
+
+# check_env_defined(var_name, description=\$ prg_name)
+check_env_defined() {
+	local env_description=${2:-"\$$1"}
+	[ "x${!1}" != "x" ]
+	local is_set=$?
+	ok_failed $is_set $env_description
+}
+
+# deps_groups(title)
+deps_groups() {
+	printf "\n${C_SEPARATOR}:: ${C_HEADER}$1${C_CLEAR}\n"
+}
+
+# TODO modular approach
+
+deps_groups "core"
+check_installed vim
+check_env_defined EDITOR
+check_installed tmux
+check_installed git
+check_installed ack
+check_installed htop
+check_installed zsh
+check_installed bc
+
+deps_groups "GUI"
+check_installed firefox
+check_installed xmonad
+check_installed dzen2
+check_installed thunderbird
+check_installed pidgin
+check_installed evince
+check_installed file-roller
+check_installed "open office" soffice
+check_installed xscreensaver
+check_installed imagemagick display
+
+deps_groups "dev"
+check_installed kdiff3
+check_installed tk wish
+
+deps_groups "network"
+check_installed inetutils telnet
+check_installed gnu-netcat netcat
+check_installed keychain
+
+deps_groups "javascript dev"
+check_installed tidy
+check_installed xmllint
+check_installed spidermonkey js
+
+deps_groups "java dev"
+check_installed java
+check_installed maven mvn
+check_env_defined JAVA_HOME
+
+deps_groups "misc tools"
+check_installed inotail
+check_installed inotify-tools inotifywait

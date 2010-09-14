@@ -1,0 +1,34 @@
+xterm*faceName:			terminusbold:pixelsize=15
+XTerm*colorMode:		on
+XTerm*background:		#000000
+XTerm*foreground:		#aaaaaa
+XTerm*visualBell:               on
+XTerm*highlightSelection:       true
+XTerm*trimSelection:            true
+
+
+URxvt*background:           #000000
+URxvt*foreground:           #aaaaaa
+URxvt.print-pipe: cat > $(TMPDIR=$HOME mktemp urxvt.XXXXXX)
+URxvt*scrollBar:        true
+
+URxvt*fading: 50
+URxvt*scrollColor: #444444
+URxvt*saveLines: 8000
+URxvt*pointerBlank: true
+URxvt*visualBell: true
+!URxvt.font: xft:terminus
+URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher: firefox
+
+! behave like xterm : handle by files in .zkbd
+!URxvt.keysym.M-Down:		\033[1;3B
+!URxvt.keysym.M-Up:		\033[1;3A
+!URxvt.keysym.M-Left:		\033[1;3D
+!URxvt.keysym.M-Right:		\033[1;3C
+!URxvt.keysym.Control-Up:	\033[1;5A
+!URxvt.keysym.Control-Down:	\033[1;5B
+!URxvt.keysym.Control-Left:	\033[1;5D
+!URxvt.keysym.Control-Right:	\033[1;5C
+

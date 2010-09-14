@@ -1,0 +1,2 @@
+prompt/git status : replace the oh-my-zsh code with calls to vcs_info
+play with command_not_found_handler to disable comments,see man zshmisc | less -p "COMMAND EXECUTION"
