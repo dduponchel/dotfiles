@@ -8,5 +8,3 @@ export PATH=~/.bin:~/bin:$PATH
 
 # a tmux within a tmux within a tmux ...
 [[ -n "$TMUX" ]] && unset TMUX
-
-[[ -z "$DISPLAY" ]] && export DISPLAY=:0
