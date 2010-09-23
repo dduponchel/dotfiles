@@ -1,4 +1,4 @@
-xterm*faceName:			terminusbold:pixelsize=15
+!xterm*faceName:			terminusbold:pixelsize=15
 XTerm*colorMode:		on
 XTerm*background:		#000000
 XTerm*foreground:		#aaaaaa
@@ -17,7 +17,6 @@ URxvt*scrollColor: #444444
 URxvt*saveLines: 8000
 URxvt*pointerBlank: true
 URxvt*visualBell: true
-!URxvt.font: xft:terminus
 URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: firefox
