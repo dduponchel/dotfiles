@@ -1,8 +1,8 @@
 if type keychain &>/dev/null 
 then
-	# id_rsa and id_dsa if any
-	find ~/.ssh/ -name "id_?sa" -exec keychain '{}' +
-	[ -f ~/.keychain/$HOST-sh ] && source ~/.keychain/$HOST-sh
+  # id_rsa and id_dsa if any
+  find ~/.ssh/ -name "id_?sa" -exec keychain '{}' +
+  [ -f ~/.keychain/$HOST-sh ] && source ~/.keychain/$HOST-sh
 fi
 
 # annoying bug since v4.3.3, commit 7072c10ae223e24f601b3
@@ -14,11 +14,11 @@ local originalSshFile=$(findFileInFpath _ssh)
 
 if [ ! -z $originalSshFile ]
 then
-	local sshFile=${ZSH:-~}/._ssh$$
-	sed -r 's/\&\& return//' $originalSshFile > $sshFile
-	source $sshFile
-	rm -f $sshFile
-	unset sshFile
+  local sshFile=${ZSH:-~}/._ssh$$
+  sed -r 's/\&\& return//' $originalSshFile > $sshFile
+  source $sshFile
+  rm -f $sshFile
+  unset sshFile
 fi
 
 unset originalSshFile

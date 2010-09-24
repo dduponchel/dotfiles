@@ -4,12 +4,12 @@ autoload colors; colors;
 type dircolors > /dev/null 2>&1 && eval $(dircolors -b)
 if [ "$(uname|grep Linux)" ]
 then
-	alias ls='ls --color=auto -ph'
-	alias tree='tree -CF'
+  alias ls='ls --color=auto -ph'
+  alias tree='tree -CF'
 elif [ "$(uname|grep BSD)" ]
 then
-	alias ls='ls -FGh'
-	alias tree='tree -CF'
+  alias ls='ls -FGh'
+  alias tree='tree -CF'
 fi
 
 # less handles colors :)
@@ -23,7 +23,7 @@ alias df='df -h'
 alias du='du -h'
 
 # get the name of the branch we are on
-function git_prompt_info() {
+git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }

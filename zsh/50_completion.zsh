@@ -7,10 +7,10 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 local ps_command
 if [ "$(uname|grep Linux)" ]
 then
-	ps_command="ps -U `whoami` -o pid,user:15,comm -w -w"
+  ps_command="ps -U `whoami` -o pid,user:15,comm -w -w"
 elif [ "$(uname|grep BSD)" ]
 then
-	ps_command="ps -U `whoami` -o pid,user,comm -w -w"
+  ps_command="ps -U `whoami` -o pid,user,comm -w -w"
 fi
 zstyle ':completion:*:*:*:*:processes' command $ps_command
 unset ps_command

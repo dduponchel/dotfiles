@@ -8,38 +8,38 @@ C_CLEAR="\033[1;0m"
 
 # ok_failed(error, description)
 ok_failed() {
-	local error=$1
-	local description=$2
+  local error=$1
+  local description=$2
 
-	if [ $error == 0 ]; then
-		printf "${C_SEPARATOR}[${C_OK}  OK  ${C_SEPARATOR}]${C_CLEAR}"
-	else
-		printf "${C_SEPARATOR}[${C_FAIL} FAIL ${C_SEPARATOR}]${C_CLEAR}"
-	fi
-	printf " $description\n"
+  if [ $error == 0 ]; then
+    printf "${C_SEPARATOR}[${C_OK}  OK  ${C_SEPARATOR}]${C_CLEAR}"
+  else
+    printf "${C_SEPARATOR}[${C_FAIL} FAIL ${C_SEPARATOR}]${C_CLEAR}"
+  fi
+  printf " $description\n"
 }
 
 # TODO multiple prgm
 # check_installed(prg_name, cmd_name=prg_name)
 check_installed() {
-	local prg_name=${1}
-	local cmd_name=${2:-$1}
+  local prg_name=${1}
+  local cmd_name=${2:-$1}
 
-	command -v $cmd_name > /dev/null
-	ok_failed $? "$prg_name"
+  command -v $cmd_name > /dev/null
+  ok_failed $? "$prg_name"
 }
 
 # check_env_defined(var_name, description=\$ prg_name)
 check_env_defined() {
-	local env_description=${2:-"\$$1"}
-	[ "x${!1}" != "x" ]
-	local is_set=$?
-	ok_failed $is_set $env_description
+  local env_description=${2:-"\$$1"}
+  [ "x${!1}" != "x" ]
+  local is_set=$?
+  ok_failed $is_set $env_description
 }
 
 # deps_groups(title)
 deps_groups() {
-	printf "\n${C_SEPARATOR}:: ${C_HEADER}$1${C_CLEAR}\n"
+  printf "\n${C_SEPARATOR}:: ${C_HEADER}$1${C_CLEAR}\n"
 }
 
 # TODO modular approach

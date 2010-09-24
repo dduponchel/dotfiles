@@ -2,8 +2,8 @@
 
 if ! type nitrogen &>/dev/null
 then
-	echo "nitrogen not found"
-	exit 1
+  echo "nitrogen not found"
+  exit 1
 fi
 
 WP_LOCATION=~/wp
@@ -13,20 +13,20 @@ RANDOM=`date +%s`
 
 # ls $WP_LOCATION/*|shuf|head -n 1 is shorter, but shuf is not everywhere...
 randomFile () {
-	for i in $WP_LOCATION/*
-	do
-		echo "$RANDOM $i"
-	done | sort | head -n 1 | sed -r "s/^[0-9]+ // "
+  for i in $WP_LOCATION/*
+  do
+    echo "$RANDOM $i"
+  done | sort | head -n 1 | sed -r "s/^[0-9]+ // "
 }
 
 cat $NITROGEN_LOCATION | while read line
 do
-		if [[ $line =~ ^file= ]]
-		then
-				echo "file=`randomFile`"
-		else
-				echo $line
-		fi
+  if [[ $line =~ ^file= ]]
+  then
+    echo "file=`randomFile`"
+  else
+    echo $line
+  fi
 done > $NITROGEN_LOCATION.tmp
 
 mv $NITROGEN_LOCATION{.tmp,}

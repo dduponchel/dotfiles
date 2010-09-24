@@ -5,25 +5,25 @@ export start=`date +%s`
 sansa_dir=/media/sde/MUSIC
 
 endScript () {
-	cr=$(echo -e "\n")
-	level="$1"
-	text="$2"
-	end=`date +%s`
+  cr=$(echo -e "\n")
+  level="$1"
+  text="$2"
+  end=`date +%s`
 
-	if [ "$level" = "normal" ]
-	then
-		exitValue=0
-		group="transfer.complete"
-	else
-		exitValue=1
-		group="transfer.error"
-	fi
+  if [ "$level" = "normal" ]
+  then
+    exitValue=0
+    group="transfer.complete"
+  else
+    exitValue=1
+    group="transfer.error"
+  fi
 
-	notify-send --urgency=$level --category=$group "Send To Sansa" -i /usr/share/pixmaps/quodlibet.png -t 5000 "$text
+  notify-send --urgency=$level --category=$group "Send To Sansa" -i /usr/share/pixmaps/quodlibet.png -t 5000 "$text
 
-total time : $(($end - $start)) s"
+  total time : $(($end - $start)) s"
 
-	exit $exitValue
+  exit $exitValue
 }
 
 
@@ -31,12 +31,12 @@ total time : $(($end - $start)) s"
 
 
 putOnSansa() {
-	music_dir=$(dirname "$1")
-	
-	# dirty, but should suffice for a v1
-	mkdir -p "$sansa_dir/$music_dir" || endScript critical "can't create $sansa_dir/$music_dir"
+  music_dir=$(dirname "$1")
 
-	cp -v "$1" "$sansa_dir/$1" || endScript critical "can't copy $1"
+  # dirty, but should suffice for a v1
+  mkdir -p "$sansa_dir/$music_dir" || endScript critical "can't create $sansa_dir/$music_dir"
+
+  cp -v "$1" "$sansa_dir/$1" || endScript critical "can't copy $1"
 }
 
 
@@ -44,8 +44,8 @@ total=$#
 
 until [ -z "$1" ]
 do
-	putOnSansa "$1"
-	shift
+  putOnSansa "$1"
+  shift
 done
 
 endScript normal "$total songs copied"

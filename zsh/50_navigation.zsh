@@ -1,10 +1,10 @@
 alias d='dirs -v'
 
 cd() {
-	builtin cd "$@" && ls
+  builtin cd "$@" && ls
 }
 
-function take() {
+take() {
   mkdir -p $1
   cd $1
 }

@@ -3,32 +3,32 @@
 type autocutsel &>/dev/null || { echo "autocutsel not found !" ; exit 1 }
 
 case "$1" in
-	start|on)
-	autocutsel -fork
-	autocutsel -selection PRIMARY -fork
-	autocutsel -selection CLIPBOARD -fork
-	;;
-	stop|off)
-	pkill autocutsel
-	;;
-	*)
-	autoload colors; colors;
-	pid=`pgrep -d ',' ^autocutsel `
-	pid=${pid%%,} # remove the last ,
-	if [ -n "$pid" ]
-	then
-		echo "----"
-		if [ "$(uname|grep Linux)" ]
-		then
-			# or ps -C autocutsel -o pid,user:15,command
-			ps -o pid,user:15,command -w -w -p $pid
-		else
-			ps -o pid,user,command -w -w -p $pid
-		fi
-		echo "----"
-		echo "sync [ ${fg_bold[green]}ON$reset_color ]"
-	else
-		echo "sync [ ${fg_bold[red]}OFF$reset_color ]"
-	fi
-	;;
+  start|on)
+    autocutsel -fork
+    autocutsel -selection PRIMARY -fork
+    autocutsel -selection CLIPBOARD -fork
+    ;;
+  stop|off)
+    pkill autocutsel
+    ;;
+  *)
+    autoload colors; colors;
+    pid=`pgrep -d ',' ^autocutsel `
+    pid=${pid%%,} # remove the last ,
+    if [ -n "$pid" ]
+    then
+      echo "----"
+      if [ "$(uname|grep Linux)" ]
+      then
+        # or ps -C autocutsel -o pid,user:15,command
+        ps -o pid,user:15,command -w -w -p $pid
+      else
+        ps -o pid,user,command -w -w -p $pid
+      fi
+      echo "----"
+      echo "sync [ ${fg_bold[green]}ON$reset_color ]"
+    else
+      echo "sync [ ${fg_bold[red]}OFF$reset_color ]"
+    fi
+    ;;
 esac
