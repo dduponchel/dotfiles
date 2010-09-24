@@ -88,3 +88,9 @@ check_env_defined JAVA_HOME
 deps_groups "misc tools"
 check_installed inotail
 check_installed inotify-tools inotifywait
+
+deps_groups "entertainment"
+check_installed mplayer
+check_installed smplayer
+check_installed alsamixer
+check_installed comix
