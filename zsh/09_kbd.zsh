@@ -8,7 +8,7 @@ kbd_custom_script=$kbd_conf_dir/zkbd.tmp
 
 if [ ! -f $kbd_conf_file ]
 then
-  print "No zkbd file found, creating one...\n"
+  print "No zkbd file found ($kbd_conf_file), creating one...\n"
 
   # the default zkbd script doesn't allow me to choose which modifiers I want.
   # I copy the script, change some values, and run it.
