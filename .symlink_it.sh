@@ -20,6 +20,9 @@ relink .xinitrc          $DOTFILES/xinitrc
 relink .xmobarrc         $DOTFILES/xmobarrc
 relink .Xresources       $DOTFILES/Xresources
 relink .zsh              $DOTFILES/zsh
+relink .zshenv           $DOTFILES/zshenv
+# extra binaries available from other shells
+relink .profile          $DOTFILES/zshenv
 relink .zshrc            $DOTFILES/zshrc
 
 mkdir -p .xmonad

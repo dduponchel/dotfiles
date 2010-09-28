@@ -17,6 +17,8 @@ wm_bar_width=$(($screen_width * $wm_bar_ratio_percent / 100))
 
 status_bar_width=$(($screen_width - $wm_bar_width - $systray_width))
 
+# because it seems not sourced in this process
+source ~/.zshenv
 
 session=${1:-xmonad}
 
