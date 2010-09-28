@@ -17,7 +17,6 @@ relink .dzen             $DOTFILES/dzen
 relink .mplayer          $DOTFILES/mplayer
 relink .vimrc            $DOTFILES/vimrc
 relink .xinitrc          $DOTFILES/xinitrc
-relink .xmobarrc         $DOTFILES/xmobarrc
 relink .Xresources       $DOTFILES/Xresources
 relink .zsh              $DOTFILES/zsh
 relink .zshenv           $DOTFILES/zshenv
