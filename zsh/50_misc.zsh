@@ -10,7 +10,6 @@ setopt long_list_jobs
 
 
 alias notepad++='wine "C:\Program Files\Notepad++\notepad++.exe"'
-alias lock='xscreensaver-command -lock'
 [ -x /usr/bin/rlwrap ] && alias telnet="rlwrap telnet $@"
 
 alias :q="exit"
