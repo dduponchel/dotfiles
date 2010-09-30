@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# slim uses exec /bin/bash -login ~/.xinitrc %session
+# so bash is started as a non interactive login shell.
+# bash will only search for ~/.bash_profile, ~/.bash_login, or ~/.profile
+# The interpreter of this script is then a non interactive shell,
+# reading only $ZDOTDIR/.zshenv (if zsh) or $BASH_ENV (if bash)
+
 
 xrdb -merge ~/.Xresources
 xscreensaver -no-splash &
@@ -16,9 +22,6 @@ wm_bar_ratio_percent=50
 wm_bar_width=$(($screen_width * $wm_bar_ratio_percent / 100))
 
 status_bar_width=$(($screen_width - $wm_bar_width - $systray_width))
-
-# need it for the X server
-source ~/.zprofile
 
 session=${1:-xmonad}
 
