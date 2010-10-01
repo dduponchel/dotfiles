@@ -67,6 +67,7 @@ check_installed file-roller
 check_installed "open office" soffice
 check_installed xscreensaver
 check_installed imagemagick display
+check_installed gqview
 
 deps_groups "dev"
 check_installed kdiff3
@@ -88,6 +89,7 @@ check_installed maven mvn
 check_env_defined JAVA_HOME
 
 deps_groups "misc tools"
+check_installed pmount
 check_installed inotail
 check_installed inotify-tools inotifywait
 
