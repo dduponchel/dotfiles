@@ -14,12 +14,16 @@ URxvt*scrollBar:        true
 
 URxvt*fading: 50
 URxvt*scrollColor: #444444
-URxvt*saveLines: 8000
+URxvt*saveLines: 16000
 URxvt*pointerBlank: true
 URxvt*visualBell: true
 URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: firefox
+
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollTtyKeypress: true
 
 ! behave like xterm : handle by files in .zkbd
 !URxvt.keysym.M-Down:		\033[1;3B
