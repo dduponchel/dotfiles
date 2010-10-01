@@ -31,8 +31,8 @@ image () {
 
 interface () {
 	addr=$$1
-	up=$$2
-	down=$$3
+	down=$$2
+	up=$$3
 	image=$$4
 
 	if [ -n "$$addr" -a "$$addr" != "No Address" ]
