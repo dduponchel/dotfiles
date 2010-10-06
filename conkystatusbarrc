@@ -31,15 +31,14 @@ image () {
 
 interface () {
 	addr=$$1
-	down=$$2
-	up=$$3
+	down=$${2%% *}
+	up=$${3%% *}
 	image=$$4
 
 	if [ -n "$$addr" -a "$$addr" != "No Address" ]
 	then
 		echo -n "$$color_image`image $$image`"
 		echo -n "$${color_text}$$down$${color_down}`image down`"
-		echo -n "$${color_text}/"
 		echo -n "$${color_text}$$up$${color_up}`image up`$${color_text} "
 	fi
 }
@@ -84,6 +83,7 @@ interface "${addr em0}" "${downspeed em0}" "${upspeed em0}" "net-wired"
 interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "net-wifi4"
 
 # DATE
-echo -n "$$color_image`image clock`$${color_text}${time %k:%M:%S %d/%m/%Y}"
+#${time %k:%M:%S %d/%m/%Y}
+echo -n "$$color_image`image clock`$${color_text}${time %k:%M %-d %b}"
 
 echo
