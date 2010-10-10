@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+setxkbmap -print | grep xkb_symbols | cut -d'+' -f 2

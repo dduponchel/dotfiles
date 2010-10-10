@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+case `getxkbmap` in
+  'fr')
+    setxkbmap us
+    ;;
+  'us')
+    setxkbmap fr
+    ;;
+  *)
+    echo "unknown layout !"
+    ;;
+esac

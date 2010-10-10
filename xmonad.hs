@@ -96,6 +96,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
 	, ((mod4Mask, xK_Page_Up),      spawn "quodlibet --previous")
 	, ((mod4Mask, xK_Page_Down),    spawn "quodlibet --next")
 	, ((mod4Mask, xK_Home),         spawn "quodlibet --play-pause")
+	, ((mod4Mask, xK_quoteleft),    spawn "rotatexkbmap") -- with qwerty keyboard
+	, ((mod4Mask, xK_twosuperior),  spawn "rotatexkbmap") -- with azerty keyboard
 	]
 
 --myLogHook xmproc = dynamicLogWithPP $ xmobarPP

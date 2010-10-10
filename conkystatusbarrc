@@ -43,6 +43,10 @@ interface () {
 	fi
 }
 
+# KEYBOARD LAYOUT
+echo -n "$${color_text}[$$color_image`getxkbmap`$${color_text}] "
+
+
 # LOAD
 #echo -n "$$color_image`image load`$${color_text}${loadavg 1} "
 
