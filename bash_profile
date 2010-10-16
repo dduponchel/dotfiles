@@ -1,1 +1,2 @@
+. $HOME/.profile
 . $HOME/.bashrc

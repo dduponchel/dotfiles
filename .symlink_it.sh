@@ -19,9 +19,10 @@ relink .vimrc            $DOTFILES/vimrc
 relink .xinitrc          $DOTFILES/xinitrc
 relink .Xresources       $DOTFILES/Xresources
 relink .zsh              $DOTFILES/zsh
-relink .zprofile         $DOTFILES/zprofile
+relink .zprofile         $DOTFILES/profile
 # for bash compatibility, and xinitrc (see comments)
-relink .profile          $DOTFILES/zprofile
+relink .bash_profile     $DOTFILES/profile
+relink .bashrc           $DOTFILES/bashrc
 relink .zshrc            $DOTFILES/zshrc
 
 mkdir -p .xmonad
