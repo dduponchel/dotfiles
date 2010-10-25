@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if ! type python &>/dev/null
+then
+  echo "python not found"
+  exit 1
+fi
+
+version=`python -V 2>&1`
+if [[ $version =~ "Python 2" ]]
+then
+  python -m SimpleHTTPServer "$@"
+elif [[ $version =~ "Python 3" ]]
+then
+  python -m http.server "$@"
+else
+  echo "unsupported version of python !"
+  exit 1
+fi
