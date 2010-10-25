@@ -1,7 +1,7 @@
 if type keychain &>/dev/null 
 then
   # id_rsa and id_dsa if any
-  find ~/.ssh/ -name "id_?sa" -exec keychain '{}' +
+  [ -d ~/.ssh ] && find ~/.ssh/ -name "id_?sa" -exec keychain '{}' +
   [ -f ~/.keychain/$HOST-sh ] && source ~/.keychain/$HOST-sh
 fi
 
