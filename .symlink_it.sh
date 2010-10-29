@@ -15,6 +15,8 @@ relink .conkyrc          $DOTFILES/conkyrc
 relink .conkystatusbarrc $DOTFILES/conkystatusbarrc
 relink .dzen             $DOTFILES/dzen
 relink .mplayer          $DOTFILES/mplayer
+relink .vim              $DOTFILES/vim
+relink .vim/autoload     $DOTFILES/vim-pathogen/autoload
 relink .vimrc            $DOTFILES/vimrc
 relink .xinitrc          $DOTFILES/xinitrc
 relink .Xresources       $DOTFILES/Xresources

@@ -1,5 +1,10 @@
 colorscheme desert
 
+filetype off
+call pathogen#runtime_append_all_bundles()
+filetype plugin on
+call pathogen#helptags()
+
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
@@ -15,7 +20,7 @@ syntax on
 " history for multiple files. Vim will complain if you try to quit without
 " saving, and swap files will keep you safe if your computer crashes.
 set hidden
-set autochdir
+"set autochdir
 set showmatch
 set autowrite 
 

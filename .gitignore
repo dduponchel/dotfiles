@@ -1,1 +1,4 @@
 *.swp
+
+# a symlink for pathogen
+vim/autoload
