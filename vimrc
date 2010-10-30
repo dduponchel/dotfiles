@@ -1,9 +1,10 @@
-colorscheme desert
-
 filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin on
 call pathogen#helptags()
+
+" colorscheme desert
+colorscheme vividchalk
 
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc
@@ -86,9 +87,6 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-"set background=dark
-
-
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -98,3 +96,29 @@ map <a-left> <C-w>h
 map <a-down> <C-w>j
 map <a-up> <C-w>k
 map <a-right> <C-w>l
+
+" from http://github.com/bronson/vimsy/blob/master/vimrc : 
+
+" BUNDLE: http://github.com/scrooloose/nerdtree.git
+nmap <leader>d :NERDTreeToggle<cr>
+nmap <leader>D :NERDTreeFind<cr>
+
+" BUNDLE: http://github.com/scrooloose/nerdcommenter.git
+
+" add a space between the comment delimiter and text
+let NERDSpaceDelims=1
+
+" Use Control-/ to toggle comments
+nmap <C-/> :call NERDComment(0, "toggle")<CR>
+vmap <C-/> <ESC>:call NERDComment(1, "toggle")<CR>
+" but most vim implementations produce Control-_ instead of Control-/:
+nmap <C-_> :call NERDComment(0, "toggle")<CR>
+vmap <C-_> <ESC>:call NERDComment(1, "toggle")<CR>
+" and vim-gtk and vim-gnome are broken (:help vimsy-control-/)
+" you can use <leader>/ to do the same things.
+nmap <leader>/ :call NERDComment(0, "toggle")<CR>
+vmap <leader>/ <ESC>:call NERDComment(1, "toggle")<CR>
+" but maybe <leader>C is nicer to type?
+nmap <leader>C :call NERDComment(0, "toggle")<CR>
+vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
+
