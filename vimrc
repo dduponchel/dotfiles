@@ -1,7 +1,7 @@
 filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin on
-call pathogen#helptags()
+" call pathogen#helptags()
 
 " colorscheme desert
 colorscheme vividchalk
@@ -23,7 +23,7 @@ syntax on
 set hidden
 "set autochdir
 set showmatch
-set autowrite 
+set autowrite
 
 " Better command-line completion
 set wildmenu
@@ -97,7 +97,7 @@ map <a-down> <C-w>j
 map <a-up> <C-w>k
 map <a-right> <C-w>l
 
-" from http://github.com/bronson/vimsy/blob/master/vimrc : 
+" from http://github.com/bronson/vimsy/blob/master/vimrc :
 
 " BUNDLE: http://github.com/scrooloose/nerdtree.git
 nmap <leader>d :NERDTreeToggle<cr>
@@ -122,3 +122,5 @@ vmap <leader>/ <ESC>:call NERDComment(1, "toggle")<CR>
 nmap <leader>C :call NERDComment(0, "toggle")<CR>
 vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
 
+" BUNDLE: http://github.com/tpope/vim-fugitive.git
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
