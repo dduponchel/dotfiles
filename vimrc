@@ -87,3 +87,14 @@ set softtabstop=2
 set expandtab
 
 "set background=dark
+
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+map <a-left> <C-w>h
+map <a-down> <C-w>j
+map <a-up> <C-w>k
+map <a-right> <C-w>l
