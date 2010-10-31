@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+cat << EOF
+launching a slow http server.
+
+don't forget, iproute2 can help too :
+# tc qdisc add dev eth0 root netem delay 500ms
+# tc qdisc del dev eth0 root
+EOF
+# see http://www.linuxfoundation.org/collaborate/workgroups/networking/netem
+
+trickle -u 10 -d 20 http
