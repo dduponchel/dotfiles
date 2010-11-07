@@ -124,3 +124,6 @@ vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
 
 " BUNDLE: http://github.com/tpope/vim-fugitive.git
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+" jmvc uses .ejs as template files
+autocmd BufNewFile,BufRead *.ejs set filetype=html
