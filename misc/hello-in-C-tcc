@@ -1,0 +1,9 @@
+#!/usr/bin/tcc -run
+// like a shell script, but tcc fails if the script ends with .sh
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  printf("hello, world");
+  return 0;
+}
