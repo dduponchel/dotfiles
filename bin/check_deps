@@ -53,13 +53,14 @@ check_installed ack
 check_installed htop
 check_installed zsh
 check_installed bc
-check_installed cmatrix
-check_installed vlock
 
 deps_groups "GUI"
 check_installed firefox
 check_installed xmonad
 check_installed dzen2
+check_installed dmenu
+check_installed trayer
+check_installed conky
 check_installed thunderbird
 check_installed pidgin
 check_installed evince
@@ -92,6 +93,8 @@ deps_groups "misc tools"
 check_installed pmount
 check_installed inotail
 check_installed inotify-tools inotifywait
+check_installed cmatrix
+check_installed vlock
 
 deps_groups "entertainment"
 check_installed mplayer
