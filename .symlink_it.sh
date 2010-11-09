@@ -1,36 +1,41 @@
 #!/usr/bin/env bash
 
-function relink() {
-  rm -ri $1
-  ln -sn $2 $1
-}
-
+# readlink -f ? forget it, -f isn't a valid option on BSD.
 cd `dirname $0`
 DOTFILES=$PWD
 
-cd
+# relink config_file [dest]
+# If dest is not specified, dest = ~/.${config_file}
+# remove dest if possible and create a symlink from config_file to dest.
+function relink() {
+  config_file=$DOTFILES/$1
+  dest=${2:-~/.$1}
 
-relink .bin              $DOTFILES/bin
-relink .conkyrc          $DOTFILES/conkyrc
-relink .conkystatusbarrc $DOTFILES/conkystatusbarrc
-relink .dzen             $DOTFILES/dzen
-relink .mplayer          $DOTFILES/mplayer
-relink .vim              $DOTFILES/vim
-relink .vim/autoload     $DOTFILES/vim-pathogen/autoload
-relink .vimrc            $DOTFILES/vimrc
-relink .xinitrc          $DOTFILES/xinitrc
-relink .Xresources       $DOTFILES/Xresources
-relink .zsh              $DOTFILES/zsh
-relink .zprofile         $DOTFILES/profile
+  [ -e $dest ] && rm -ri $dest
+  ln -sn $config_file $dest
+}
+
+relink bin
+relink conkyrc
+relink conkystatusbarrc
+relink dzen
+relink mplayer
+relink vim
+relink vim-pathogen/autoload ~/.vim/autoload
+relink vimrc
+relink xinitrc
+relink Xresources
+relink zsh
+relink profile ~/.zprofile
 # for bash compatibility, and xinitrc (see comments)
-relink .bash_profile     $DOTFILES/profile
-relink .bashrc           $DOTFILES/bashrc
-relink .zshrc            $DOTFILES/zshrc
+relink profile ~/.bash_profile
+relink bashrc
+relink zshrc
 
 mkdir -p .xmonad
-relink .xmonad/xmonad.hs $DOTFILES/xmonad.hs
+relink xmonad.hs ~/.xmonad/xmonad.hs
 
 # quodlibet plugins : not the ideal way to handle my changes...
 mkdir -p .quodlibet/plugins/{editing,songsmenu}/
-relink .quodlibet/plugins/editing/iconv.py      $DOTFILES/quodlibet/plugins/editing/iconv.py
-relink .quodlibet/plugins/songsmenu/openwith.py $DOTFILES/quodlibet/plugins/songsmenu/openwith.py
+relink quodlibet/plugins/editing/iconv.py
+relink quodlibet/plugins/songsmenu/openwith.py
