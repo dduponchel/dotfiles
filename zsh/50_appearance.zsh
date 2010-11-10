@@ -46,4 +46,20 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""                    # Text to display if the branch
 # prompts.  Substitutions within prompts do not affect the command status.
 setopt prompt_subst
 
-PROMPT='%(?..%{$bg[red]%}%B<%?>%b%{$reset_color%} )%* %(0#.%{$fg_bold[red]%}.%{$fg_bold[green]%})%n@%m %{$fg_bold[blue]%}%2~$(git_prompt_info)%{$reset_color%} %(0#.#.$) '
+local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char
+
+# if the last command didn't returned with 0, show the error
+prompt_previous_error='%(?..%{$bg[red]%}%B<%?>%b%{$reset_color%} )'
+prompt_date='%*'
+# root (UID=0) = red, user = green
+prompt_main_color='%(0#.%{$fg_bold[red]%}.%{$fg_bold[green]%})'
+prompt_user='%n'
+prompt_host='%m'
+# a pwd with only the last two folders
+prompt_path='%{$fg_bold[blue]%}%2~'
+# # for root, $ for user
+prompt_last_char='%(0#.#.$)'
+
+PROMPT=${prompt_previous_error}${prompt_date}' '${prompt_main_color}${prompt_user}'@'${prompt_host}' '${prompt_path}'$(git_prompt_info)%{$reset_color%} '${prompt_last_char}' '
+
+unset prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char
