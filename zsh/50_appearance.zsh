@@ -52,13 +52,18 @@ local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_hos
 prompt_previous_error='%(?..%{$bg[red]%}%B<%?>%b%{$reset_color%} )'
 prompt_date='%*'
 # root (UID=0) = red, user = green
-prompt_main_color='%(0#.%{$fg_bold[red]%}.%{$fg_bold[green]%})'
+prompt_main_color='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})'
 prompt_user='%n'
-prompt_host='%m'
+if [ -n "$SSH_CLIENT" ]
+then
+  prompt_host='%{$fg_bold[default]%}%Ussh://%m%u%{$reset_color%}'
+else
+  prompt_host='%m'
+fi
 # a pwd with only the last two folders
 prompt_path='%{$fg_bold[blue]%}%2~'
 # # for root, $ for user
-prompt_last_char='%(0#.#.$)'
+prompt_last_char='%(!.#.$)'
 
 PROMPT=${prompt_previous_error}${prompt_date}' '${prompt_main_color}${prompt_user}'@'${prompt_host}' '${prompt_path}'$(git_prompt_info)%{$reset_color%} '${prompt_last_char}' '
 
