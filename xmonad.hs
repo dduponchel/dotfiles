@@ -29,14 +29,14 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "urxvt"
+myTerminal = "urxvt"
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask       = mod4Mask
+myModMask = mod4Mask
 
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
@@ -47,7 +47,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -71,7 +71,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     -- Allows focusing other monitors without killing the fullscreen
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
-	]
+    ]
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -89,21 +89,17 @@ myStartupHook = setWMName "LG3D"
 --
 newKeys x = M.union (keys defaultConfig x) (M.fromList (myKeys x))
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
-	[ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
-	, ((0, xK_Print), spawn "scrot")
-	, ((mod4Mask, xK_Up),           spawn "amixer -c 0 set Master 2dB+")
-	, ((mod4Mask, xK_Down),         spawn "amixer -c 0 set Master 1dB-")
-	, ((mod4Mask, xK_Page_Up),      spawn "quodlibet --previous")
-	, ((mod4Mask, xK_Page_Down),    spawn "quodlibet --next")
-	, ((mod4Mask, xK_Home),         spawn "quodlibet --play-pause")
-	, ((mod4Mask, xK_quoteleft),    spawn "rotatexkbmap") -- with qwerty keyboard
-	, ((mod4Mask, xK_twosuperior),  spawn "rotatexkbmap") -- with azerty keyboard
-	]
+    [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+    , ((0, xK_Print),                  spawn "scrot")
+    , ((mod4Mask, xK_Up),              spawn "amixer -c 0 set Master 2dB+")
+    , ((mod4Mask, xK_Down),            spawn "amixer -c 0 set Master 1dB-")
+    , ((mod4Mask, xK_Page_Up),         spawn "quodlibet --previous")
+    , ((mod4Mask, xK_Page_Down),       spawn "quodlibet --next")
+    , ((mod4Mask, xK_Home),            spawn "quodlibet --play-pause")
+    , ((mod4Mask, xK_quoteleft),       spawn "rotatexkbmap") -- with qwerty keyboard
+    , ((mod4Mask, xK_twosuperior),     spawn "rotatexkbmap") -- with azerty keyboard
+    ]
 
---myLogHook xmproc = dynamicLogWithPP $ xmobarPP
---			       { ppOutput = hPutStrLn xmproc
---             	    , ppTitle = xmobarColor "green" "" . shorten 50
---    	           }
 myLogHook = dynamicLogWithPP dzenPP
 
 ------------------------------------------------------------------------
@@ -112,17 +108,16 @@ myLogHook = dynamicLogWithPP dzenPP
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
---	xmproc <- spawnPipe "xmobar"
-	xmonad $ defaultConfig {
-		manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-		, terminal = myTerminal
-		, modMask = myModMask
+    xmonad $ defaultConfig {
+        manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+        , terminal = myTerminal
+        , modMask = myModMask
         , normalBorderColor="#000044"
-        , focusedBorderColor="#990000" 
+        , focusedBorderColor="#990000"
         , borderWidth = 1
-   	    , startupHook = myStartupHook
+        , startupHook = myStartupHook
         , layoutHook = smartBorders (avoidStruts  $  layoutHook defaultConfig)
-		, workspaces = myWorkspaces
-		, keys = newKeys
-		, logHook = myLogHook --xmproc
-		}
+        , workspaces = myWorkspaces
+        , keys = newKeys
+        , logHook = myLogHook
+        }
