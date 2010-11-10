@@ -1,2 +1,5 @@
 My config files.
 Released under the WTFPL.
+
+Don't forget to use the git submodule update --init command.
+New here ? Use the .symlink_it.sh script to create all the symlinks.
