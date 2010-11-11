@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+FIFO=~/.xmonad/output
+
+
+case $1 in
+  start)
+
+    # bar :    |--   xmonad bar    --||-- conky bar --||-trayer-|
+    # lenght : | X percent of screen ||  what's left  || fixed  |
+
+    screen_width=$(xrandr | grep '*'|head -n 1|sed -r "s/[[:space:]]*//;s/x.*//")
+
+    systray_width_param=5
+    # 1 "trayer width" ~= 10px
+    systray_width=$(($systray_width_param * 10))
+
+    wm_bar_ratio_percent=50
+    wm_bar_width=$(($screen_width * $wm_bar_ratio_percent / 100))
+
+    status_bar_width=$(($screen_width - $wm_bar_width - $systray_width))
+
+    # trayer
+    trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width $systray_width_param --height 18 --transparent true --tint 0x000000 &
+    # xmonad bar
+    dzen2 -title-name xmonad-bar -ta l -w ${wm_bar_width} <${FIFO} &
+    # conky bar
+    conky -c ~/.conkystatusbarrc 2> /dev/null |zsh|dzen2 -ta r -w $status_bar_width -x $wm_bar_width &
+    ;;
+
+  stop)
+    pkill -f xmonad-bar
+    pkill -f conkystatusbarrc
+    pkill trayer
+
+    ;;
+
+  restart)
+    $0 stop
+    sleep 1s
+    $0 start
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop|restart}" >&2
+    exit 1
+
+esac
