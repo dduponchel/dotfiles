@@ -75,6 +75,10 @@ set cmdheight=2
 " Display line numbers on the left
 set number
 
+" Show the line number relative to the line with the cursor in front of each
+" line.
+set relativenumber
+
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
 
@@ -96,6 +100,10 @@ map <a-left> <C-w>h
 map <a-down> <C-w>j
 map <a-up> <C-w>k
 map <a-right> <C-w>l
+
+" Map <C-L> (redraw screen) to also turn off search highlighting until the
+" next search
+nnoremap <C-L> :nohl<CR><C-L>
 
 " from http://github.com/bronson/vimsy/blob/master/vimrc :
 
