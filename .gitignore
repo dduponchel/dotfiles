@@ -2,3 +2,5 @@
 
 # a symlink for pathogen
 vim/autoload
+# temp files
+vim/.*
