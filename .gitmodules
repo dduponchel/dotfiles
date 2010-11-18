@@ -28,3 +28,6 @@
 [submodule "vim/bundle/Gundo"]
 	path = vim/bundle/Gundo
 	url = https://github.com/vim-scripts/Gundo.git
+[submodule "vim/bundle/SearchComplete"]
+	path = vim/bundle/SearchComplete
+	url = https://github.com/vim-scripts/SearchComplete.git
