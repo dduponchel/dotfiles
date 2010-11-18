@@ -25,3 +25,6 @@
 [submodule "vim/bundle/vim-trailing-whitespace"]
 	path = vim/bundle/vim-trailing-whitespace
 	url = http://github.com/bronson/vim-trailing-whitespace.git
+[submodule "vim/bundle/Gundo"]
+	path = vim/bundle/Gundo
+	url = https://github.com/vim-scripts/Gundo.git
