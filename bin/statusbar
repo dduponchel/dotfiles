@@ -2,6 +2,8 @@
 
 FIFO=~/.xmonad/output
 
+# conkystatusbarrc needs to be in home for images
+cd ~
 
 case $1 in
   start)

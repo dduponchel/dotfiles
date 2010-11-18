@@ -10,6 +10,10 @@
 *visualBell:                on
 *saveLines:                 16000
 
+! dzen2 uses the font declared here
+! Override *font to avoid problems
+dzen2*font:                 fixed
+
 !!
 ! xterm specific
 !!
