@@ -14,6 +14,8 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Prompt
+import XMonad.Prompt.Workspace
 import System.IO
 
 import XMonad.Hooks.FadeInactive
@@ -101,6 +103,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
     , ((mod4Mask, xK_Home),            spawn "quodlibet --play-pause")
     , ((mod4Mask, xK_quoteleft),       spawn "rotatexkbmap") -- with qwerty keyboard
     , ((mod4Mask, xK_twosuperior),     spawn "rotatexkbmap") -- with azerty keyboard
+    , ((mod4Mask, xK_g),               workspacePrompt defaultXPConfig (windows . W.shift))
     ]
 
 myLogHook = dynamicLogWithPP dzenPP
