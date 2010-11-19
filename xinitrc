@@ -12,12 +12,10 @@ session=${1:-xmonad}
 
 case $session in
   fluxbox)
-    ck-launch-session&
     startfluxbox & wmpid=$!
     ;;
   xmonad)
     xsetroot -cursor_name left_ptr &
-    ck-launch-session&
     FIFO=~/.xmonad/output
     [ ! -p ${FIFO} ] && mkfifo ${FIFO}
     statusbar start
