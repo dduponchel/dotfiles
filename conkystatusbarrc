@@ -38,8 +38,8 @@ interface () {
 	if [ -n "$$addr" -a "$$addr" != "No Address" ]
 	then
 		echo -n "$$color_image`image $$image`"
-		echo -n "$${color_text}$$down$${color_down}`image down`"
-		echo -n "$${color_text}$$up$${color_up}`image up`$${color_text} "
+                printf "%s%8s%s%s" $${color_text} $$down $${color_down} `image down`
+                printf "%s%8s%s%s" $${color_text} $$up $${color_up} `image up`
 	fi
 }
 
@@ -51,7 +51,7 @@ echo -n "$${color_text}[$$color_image`getxkbmap`$${color_text}] "
 #echo -n "$$color_image`image load`$${color_text}${loadavg 1} "
 
 # CPU
-echo -n "$$color_image`image cpu`$${color_text}${cpu cpu1}% "
+printf "%s%s%s%-4s" $$color_image `image cpu` $${color_text} ${cpu cpu1}'%'
 
 # RAM
 #echo -n "$$color_image`image mem`$${color_text}${memperc}% "
@@ -76,7 +76,7 @@ ${if_match "${acpiacadapter}" != "no ac_adapters?"}
 	else
 		echo -n "$$color_image`image power-ac`$${color_text}"
 	fi
-	echo -n "$${bat_percent%\%}% "
+        printf "%-4s" $${bat_percent%\%}'%'
 	[ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || echo -n "= $${bat_time%m*} "
 
 $endif
