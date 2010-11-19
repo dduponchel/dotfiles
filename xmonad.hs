@@ -75,8 +75,11 @@ myWorkspaces = map concat (sequence [["u", "d"], (map show [1..9])])
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    {-
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
+    , className =? "Firefox"        --> doF (W.shift "web" )
+    -}
     -- Allows focusing other monitors without killing the fullscreen
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
@@ -95,7 +98,7 @@ myStartupHook = setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-newKeys x = M.union (keys defaultConfig x) (M.fromList (myKeys x))
+newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     [ ((modMask .|. shiftMask, xK_z),  spawn "xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
