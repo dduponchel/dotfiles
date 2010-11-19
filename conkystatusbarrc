@@ -26,21 +26,21 @@ color_up="^fg(\#F88)"
 color_down="^fg(\#8F8)"
 
 image () {
-	print "^i(.dzen/$$1.xbm)"
+  print "^i(.dzen/$$1.xbm)"
 }
 
 interface () {
-	addr=$$1
-	down=$${2%% *}
-	up=$${3%% *}
-	image=$$4
+  addr=$$1
+  down=$${2%% *}
+  up=$${3%% *}
+  image=$$4
 
-	if [ -n "$$addr" -a "$$addr" != "No Address" ]
-	then
-		echo -n "$$color_image`image $$image`"
-                printf "%s%8s%s%s" $${color_text} $$down $${color_down} `image down`
-                printf "%s%8s%s%s" $${color_text} $$up $${color_up} `image up`
-	fi
+  if [ -n "$$addr" -a "$$addr" != "No Address" ]
+  then
+    echo -n "$$color_image`image $$image`"
+    printf "%s%8s%s%s" $${color_text} $$down $${color_down} `image down`
+    printf "%s%8s%s%s" $${color_text} $$up $${color_up} `image up`
+  fi
 }
 
 # KEYBOARD LAYOUT
@@ -58,32 +58,32 @@ printf "%s%s%s%-4s" $$color_image `image cpu` $${color_text} ${cpu cpu1}'%'
 
 # POWER
 ${if_match "${acpiacadapter}" != "no ac_adapters?"}
-	${if_match "${sysname}" == "FreeBSD"}
-		bat_adapter="$apm_adapter"
-		# bug ? the next $apm_* is "ERR"...
-		echo -n "$apm_adapter" > /dev/null
-		bat_percent="$apm_battery_life"
-		bat_time="$apm_battery_time"
-	$else
-		bat_adapter="$acpiacadapter"
-		bat_percent="$battery_percent"
-		bat_time="$battery_time"
-	$endif
+  ${if_match "${sysname}" == "FreeBSD"}
+    bat_adapter="$apm_adapter"
+    # bug ? the next $apm_* is "ERR"...
+    echo -n "$apm_adapter" > /dev/null
+    bat_percent="$apm_battery_life"
+    bat_time="$apm_battery_time"
+  $else
+    bat_adapter="$acpiacadapter"
+    bat_percent="$battery_percent"
+    bat_time="$battery_time"
+  $endif
 
-	if [ "$$bat_adapter" = "off-line" ]
-	then
-		echo -n "$$color_image`image power-bat`$${color_text}"
-	else
-		echo -n "$$color_image`image power-ac`$${color_text}"
-	fi
-        printf "%-4s" $${bat_percent%\%}'%'
-	[ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || echo -n "= $${bat_time%m*} "
+  if [ "$$bat_adapter" = "off-line" ]
+  then
+    echo -n "$$color_image`image power-bat`$${color_text}"
+  else
+    echo -n "$$color_image`image power-ac`$${color_text}"
+  fi
+  printf "%-4s" $${bat_percent%\%}'%'
+  [ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || echo -n "= $${bat_time%m*} "
 
 $endif
 
 # NET
-interface "${addr eth0}" "${downspeed eth0}" "${upspeed eth0}" "net-wired"
-interface "${addr em0}" "${downspeed em0}" "${upspeed em0}" "net-wired"
+interface "${addr eth0}"  "${downspeed eth0}"  "${upspeed eth0}"  "net-wired"
+interface "${addr em0}"   "${downspeed em0}"   "${upspeed em0}"   "net-wired"
 interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "net-wifi4"
 
 # DATE
