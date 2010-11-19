@@ -54,7 +54,8 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = map show [1..18]
+{- myWorkspaces = map show [1..18] -}
+myWorkspaces = map concat (sequence [["u", "d"], (map show [1..9])])
 
 ------------------------------------------------------------------------
 -- Window rules:
