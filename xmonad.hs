@@ -25,6 +25,8 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Grid
+import XMonad.Actions.CycleWS
+import XMonad.Actions.Plane
 
 import XMonad.Hooks.ManageHelpers
 
@@ -52,7 +54,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = map show [1..9]
+myWorkspaces = map show [1..18]
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -93,17 +95,28 @@ myStartupHook = setWMName "LG3D"
 -- Key bindings. Add, modify or remove key bindings here.
 --
 newKeys x = M.union (keys defaultConfig x) (M.fromList (myKeys x))
-myKeys conf@(XConfig {XMonad.modMask = modm}) =
-    [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+myKeys conf@(XConfig {XMonad.modMask = modMask}) =
+    [ ((modMask .|. shiftMask, xK_z),  spawn "xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
-    , ((mod4Mask, xK_Up),              spawn "amixer -c 0 set Master 2dB+")
-    , ((mod4Mask, xK_Down),            spawn "amixer -c 0 set Master 1dB-")
-    , ((mod4Mask, xK_Page_Up),         spawn "quodlibet --previous")
-    , ((mod4Mask, xK_Page_Down),       spawn "quodlibet --next")
-    , ((mod4Mask, xK_Home),            spawn "quodlibet --play-pause")
-    , ((mod4Mask, xK_quoteleft),       spawn "rotatexkbmap") -- with qwerty keyboard
-    , ((mod4Mask, xK_twosuperior),     spawn "rotatexkbmap") -- with azerty keyboard
-    , ((mod4Mask, xK_g),               workspacePrompt defaultXPConfig (windows . W.shift))
+    {-
+    -- my previous music key bindings clash with the bindings for the 2D workspace layout
+    , ((modMask, xK_Up),               spawn "amixer -c 0 set Master 2dB+")
+    , ((modMask, xK_Down),             spawn "amixer -c 0 set Master 1dB-")
+    , ((modMask, xK_Page_Up),          spawn "quodlibet --previous")
+    , ((modMask, xK_Page_Down),        spawn "quodlibet --next")
+    , ((modMask, xK_Home),             spawn "quodlibet --play-pause")
+    -}
+    , ((modMask, xK_quoteleft),        spawn "rotatexkbmap") -- with qwerty keyboard
+    , ((modMask, xK_twosuperior),      spawn "rotatexkbmap") -- with azerty keyboard
+    -- go to a named workspace
+    , ((modMask, xK_g),                workspacePrompt defaultXPConfig (windows . W.shift))
+    ]
+    ++
+    -- Switch workspaces (and move windows) vertically
+    -- don't ask me how the code works, I really need to read a haskell book
+    [((keyMask .|. modMask, keySym), function (Lines 2) Finite direction)
+     | (keySym, direction) <- zip [xK_Left .. xK_Down] $ enumFrom ToLeft
+     , (keyMask, function) <- [(0, planeMove), (shiftMask, planeShift)]
     ]
 
 myLogHook = dynamicLogWithPP dzenPP
