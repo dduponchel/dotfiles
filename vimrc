@@ -107,11 +107,11 @@ nnoremap <C-L> :nohl<CR><C-L>
 
 " from http://github.com/bronson/vimsy/blob/master/vimrc :
 
-" BUNDLE: http://github.com/scrooloose/nerdtree.git
+" BUNDLE: nerdtree
 nmap <leader>d :NERDTreeToggle<cr>
 nmap <leader>D :NERDTreeFind<cr>
 
-" BUNDLE: http://github.com/scrooloose/nerdcommenter.git
+" BUNDLE: nerdcommenter
 
 " add a space between the comment delimiter and text
 let NERDSpaceDelims=1
@@ -130,7 +130,10 @@ vmap <leader>/ <ESC>:call NERDComment(1, "toggle")<CR>
 nmap <leader>C :call NERDComment(0, "toggle")<CR>
 vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
 
-" BUNDLE: http://github.com/tpope/vim-fugitive.git
+" BUNDLE: Gundo
+nmap <leader>u :GundoToggle<cr>
+
+" BUNDLE: vim-fugitive
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " jmvc uses .ejs as template files
