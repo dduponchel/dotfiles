@@ -55,7 +55,7 @@ myModMask = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 {- myWorkspaces = map show [1..18] -}
-myWorkspaces = map concat (sequence [["u", "d"], (map show [1..9])])
+myWorkspaces = map concat (sequence [["u", "d"], (map show [1..10])])
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -121,6 +121,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     [((keyMask .|. modMask, keySym), function (Lines 2) Finite direction)
      | (keySym, direction) <- zip [xK_Left .. xK_Down] $ enumFrom ToLeft
      , (keyMask, function) <- [(0, planeMove), (shiftMask, planeShift)]
+    ]
+    ++
+    -- same as /usr/share/xmonad-0.9.1/man/xmonad.hs, but add xK_0
+    -- 10 workspaces !
+    [((m .|. modMask, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
     ]
 
 myLogHook = dynamicLogWithPP dzenPP
