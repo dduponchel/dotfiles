@@ -23,7 +23,8 @@ relink conkyrc
 relink conkystatusbarrc
 relink dzen
 relink mplayer
-relink vim
+mkdir -p $DESTDIR/.vim
+relink vim-plugins $DESTDIR/.vim/bundle
 relink vim-pathogen/autoload $DESTDIR/.vim/autoload
 relink vimrc
 relink xinitrc
