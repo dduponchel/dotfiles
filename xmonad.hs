@@ -7,28 +7,26 @@
 -- Normally, you'd only override those defaults you care about.
 --
 
-import XMonad
 import Data.Monoid
-import System.Exit
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Prompt
-import XMonad.Prompt.Workspace
-import System.IO
-
-import XMonad.Hooks.FadeInactive
-import XMonad.Util.EZConfig(additionalKeys)
 import Data.Ratio ((%))
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Tabbed
-import XMonad.Layout.Grid
+import System.Exit
+import System.IO
+import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Plane
-
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
+import XMonad.Layout.Grid
+import XMonad.Layout.NoBorders
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
+import XMonad.Prompt
+import XMonad.Prompt.Workspace
+import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Run(spawnPipe)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
