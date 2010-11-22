@@ -100,14 +100,11 @@ newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     [ ((modMask .|. shiftMask, xK_z),  spawn "xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
-    {-
-    -- my previous music key bindings clash with the bindings for the 2D workspace layout
-    , ((modMask, xK_Up),               spawn "amixer -c 0 set Master 2dB+")
-    , ((modMask, xK_Down),             spawn "amixer -c 0 set Master 1dB-")
+    , ((modMask, xK_Insert),           spawn "amixer -c 0 set Master 2dB+")
+    , ((modMask, xK_Delete),           spawn "amixer -c 0 set Master 1dB-")
     , ((modMask, xK_Page_Up),          spawn "quodlibet --previous")
     , ((modMask, xK_Page_Down),        spawn "quodlibet --next")
     , ((modMask, xK_Home),             spawn "quodlibet --play-pause")
-    -}
     , ((modMask, xK_quoteleft),        spawn "rotatexkbmap") -- with qwerty keyboard
     , ((modMask, xK_twosuperior),      spawn "rotatexkbmap") -- with azerty keyboard
     -- go to a named workspace
