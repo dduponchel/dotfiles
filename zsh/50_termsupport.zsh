@@ -1,3 +1,9 @@
+if ! infocmp &>/dev/null
+then
+  echo "WARN : this term ($TERM) is unknown, falling back to xterm"
+  export TERM=xterm
+fi
+
 if [ -n "$DISPLAY" ]
 then
   preexec () {
