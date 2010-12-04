@@ -26,6 +26,7 @@ then
     zsh -f $kbd_custom_script
     [ ! $? = 0 ] && print "\n\n${fg[red]}file $kbd_conf_file not created !$reset_color you will need it to use key bindings.\n"
     rm $kbd_custom_script
+    rm $kbd_conf_dir/*tmp
   fi
 fi
 
