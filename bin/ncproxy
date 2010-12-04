@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# ncproxy : a proxy using netcat
+#
+# from http://www.stearns.org/doc/nc-intro.v0.9.html
+# This is a 30+ loc script only to do this :
+# mknod backpipe p  or  mkfifo backpipe
+# nc -l -p 8080 0<backpipe | tee -a inflow | nc google.com 80 | tee -a outflow 1>backpipe
+# but it handles creation/deletion of the fifo, parameters, 'usage' output, etc
+
+local_port=$1
+remote_host=$2
+remote_port=$3
+inflow_log=${4:-inflow}
+outflow_log=${5:-outflow}
+
+if [[ $# < 3 ]]
+then
+  cat <<-EOF
+  usage : $0 local_port remote_host remote_port [inflow_log] [outflow_log]
+EOF
+  exit 1
+fi
+trap cleanup SIGINT
+
+function cleanup () {
+  rm $backpipe
+  echo && echo 'Keyboard interrupt received, exiting.'
+  exit 0
+}
+
+echo "proxy localhost:$local_port -> $remote_host:$remote_port"
+
+backpipe=/tmp/ncproxy-backpipe.$$
+mkfifo $backpipe
+
+nc -l -p $local_port 0<$backpipe | tee -a $inflow_log | nc $remote_host $remote_port | tee -a $outflow_log 1>$backpipe
