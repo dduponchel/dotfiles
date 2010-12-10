@@ -73,7 +73,7 @@ set t_vb=
 set cmdheight=2
 
 " Display line numbers on the left
-set number
+" set number
 
 " Show the line number relative to the line with the cursor in front of each
 " line.
