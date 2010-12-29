@@ -35,6 +35,7 @@ relink profile $DESTDIR/.zprofile
 relink profile $DESTDIR/.bash_profile
 relink bashrc
 relink zshrc
+relink npmrc
 
 mkdir -p $DESTDIR/.xmonad
 relink xmonad.hs $DESTDIR/.xmonad/xmonad.hs

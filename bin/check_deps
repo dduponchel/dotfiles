@@ -83,6 +83,7 @@ deps_groups "javascript dev"
 check_installed tidy
 check_installed xmllint
 check_installed spidermonkey js
+check_installed nodejs node
 
 deps_groups "java dev"
 check_installed java
