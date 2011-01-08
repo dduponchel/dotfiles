@@ -14,7 +14,8 @@ function relink() {
   config_file=$DOTFILES/$1
   dest=${2:-$DESTDIR/.$1}
 
-  [ -e $dest ] && rm -ri $dest
+  # a broken symlink isn't a file...
+  [ -e $dest -o -L $dest ] && rm -ri $dest
   ln -sn $config_file $dest
 }
 
