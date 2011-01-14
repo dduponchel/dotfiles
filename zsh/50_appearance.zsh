@@ -1,7 +1,7 @@
 autoload colors; colors;
 
 # Enable colors
-type dircolors > /dev/null 2>&1 && eval $(dircolors -b)
+command_exists dircolors && eval $(dircolors -b)
 if [ "$(uname|grep Linux)" ]
 then
   alias ls='ls --color=auto -ph'
@@ -42,8 +42,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"  # At the very end of the prompt
 ZSH_THEME_GIT_PROMPT_DIRTY="*"                   # Text to display if the branch is dirty
 ZSH_THEME_GIT_PROMPT_CLEAN=""                    # Text to display if the branch is clean
 
-# If  set,  parameter  expansion, command substitution and arithmetic expansion are performed in
-# prompts.  Substitutions within prompts do not affect the command status.
+# If set, parameter expansion, command substitution and arithmetic expansion are performed in
+# prompts. Substitutions within prompts do not affect the command status.
 setopt prompt_subst
 
 local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char

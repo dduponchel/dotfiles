@@ -1,5 +1,7 @@
 local kbd_conf_dir kbd_conf_file kbd_custom_script kbd_original_script
 
+autoload colors; colors;
+
 kbd_conf_dir=${ZDOTDIR:-$HOME}/.zkbd
 [[ -d $kbd_conf_dir ]] || mkdir $kbd_conf_dir || return 1
 
@@ -8,7 +10,18 @@ kbd_custom_script=$kbd_conf_dir/zkbd.tmp
 
 if [ ! -f $kbd_conf_file ]
 then
-  print "No zkbd file found ($kbd_conf_file), creating one...\n"
+  cat <<-EOF
+	This zsh setup uses a mapping between the key pressed and key sequence, for example : key[Up]='^[[A'
+	${fg[green]}pro${reset_color} : changing term / OS / whatever is easy.
+	${fg[red]}con${reset_color} : for each new setup, you have to fill in a new file.
+
+	This job is done by the current script : you will be prompted to type near ${fg_bold[red]}100${reset_color} keys / keys with modifiers. It will take some minutes but the generated file is mandatory for key bindings.
+
+	${bold_color}You can also skip this step by pressing ctrl+C${reset_color}, but you will only have minimalist bindings.
+
+	No zkbd file found ($kbd_conf_file), creating one...
+	EOF
+
 
   # the default zkbd script doesn't allow me to choose which modifiers I want.
   # I copy the script, change some values, and run it.
@@ -26,7 +39,7 @@ then
     zsh -f $kbd_custom_script
     [ ! $? = 0 ] && print "\n\n${fg[red]}file $kbd_conf_file not created !$reset_color you will need it to use key bindings.\n"
     rm $kbd_custom_script
-    rm $kbd_conf_dir/*tmp
+    find $kbd_conf_dir -name '*tmp' -delete
   fi
 fi
 

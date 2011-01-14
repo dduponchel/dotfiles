@@ -2,15 +2,12 @@
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
-## file rename magick
-bindkey "^[m" copy-prev-shell-word
-
 # List jobs in the long format by default.
 setopt long_list_jobs
 
 
 alias notepad++='wine "C:\Program Files\Notepad++\notepad++.exe"'
-[ -x /usr/bin/rlwrap ] && alias telnet="rlwrap telnet $@"
+command_exists rlwrap && alias telnet="rlwrap telnet $@"
 
 alias :q="exit"
 alias vim="vim -p"

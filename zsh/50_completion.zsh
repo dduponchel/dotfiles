@@ -17,9 +17,10 @@ unset ps_command
 
 # With commands like rm, it's annoying if you keep getting offered the same
 # file multiple times. This fixes it. Also good for cp, et cetera..
-zstyle ':completion:*:rm:*' ignore-line yes
-zstyle ':completion:*:cp:*' ignore-line yes
-zstyle ':completion:*:mv:*' ignore-line yes
+# zstyle ':completion:*:rm:*' ignore-line yes
+# zstyle ':completion:*:cp:*' ignore-line yes
+# zstyle ':completion:*:mv:*' ignore-line yes
+zstyle ':completion:*:*:*' ignore-line yes
 
 # If this option is unset, output flow control via start/stop  characters  (usually  assigned  to
 # ^S/^Q) is disabled in the shell's editor.

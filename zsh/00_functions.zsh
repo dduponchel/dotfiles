@@ -1,4 +1,4 @@
-
+# find a file in zsh's fpath
 findFileInFpath() {
   local wantedFile=${1?must specify a file to search}
   IFS=:
@@ -8,6 +8,7 @@ findFileInFpath() {
   done
 }
 
-\#(){
-  echo "comment ignored"
+# check if a command exists
+command_exists() {
+  type $1 > /dev/null 2>&1
 }
