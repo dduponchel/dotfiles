@@ -27,7 +27,7 @@ case $1 in
     # xmonad bar
     dzen2 -ta l -w ${wm_bar_width} <${FIFO} &
     # conky bar
-    conky -c ~/.conkystatusbarrc 2> /dev/null |zsh|dzen2 -ta r -w $status_bar_width -x $wm_bar_width &
+    conky -c ~/.conkystatusbarrc 2> /dev/null |bash|dzen2 -ta r -w $status_bar_width -x $wm_bar_width &
     ;;
 
   stop)

@@ -26,7 +26,7 @@ color_up="^fg(\#F88)"
 color_down="^fg(\#8F8)"
 
 image () {
-  print "^i(.dzen/$$1.xbm)"
+  printf "^i(.dzen/$$1.xbm)"
 }
 
 interface () {
@@ -37,31 +37,31 @@ interface () {
 
   if [ -n "$$addr" -a "$$addr" != "No Address" ]
   then
-    echo -n "$$color_image`image $$image`"
-    printf "%s%8s%s%s" $${color_text} $$down $${color_down} `image down`
-    printf "%s%8s%s%s" $${color_text} $$up $${color_up} `image up`
+    printf "$$color_image`image $$image`"
+    printf "$${color_text}%8s$${color_down}`image down`" $$down
+    printf "$${color_text}%8s$${color_up}`image up`" $$up
   fi
 }
 
 # KEYBOARD LAYOUT
-echo -n "$${color_text}[$$color_image`getxkbmap`$${color_text}] "
+printf "$${color_text}[$$color_image`getxkbmap`$${color_text}] "
 
 
 # LOAD
-#echo -n "$$color_image`image load`$${color_text}${loadavg 1} "
+# printf "$$color_image`image load`$${color_text}${loadavg 1} "
 
 # CPU
-printf "%s%s%s%-4s" $$color_image `image cpu` $${color_text} ${cpu cpu1}'%'
+printf "$$color_image`image cpu`$${color_text}%-4s" ${cpu cpu1}'%'
 
 # RAM
-#echo -n "$$color_image`image mem`$${color_text}${memperc}% "
+#printf "$$color_image`image mem`$${color_text}${memperc}% "
 
 # POWER
 ${if_match "${acpiacadapter}" != "no ac_adapters?"}
   ${if_match "${sysname}" == "FreeBSD"}
     bat_adapter="$apm_adapter"
     # bug ? the next $apm_* is "ERR"...
-    echo -n "$apm_adapter" > /dev/null
+    printf "$apm_adapter" > /dev/null
     bat_percent="$apm_battery_life"
     bat_time="$apm_battery_time"
   $else
@@ -72,12 +72,12 @@ ${if_match "${acpiacadapter}" != "no ac_adapters?"}
 
   if [ "$$bat_adapter" = "off-line" ]
   then
-    echo -n "$$color_image`image power-bat`$${color_text}"
+    printf "$$color_image`image power-bat`$${color_text}"
   else
-    echo -n "$$color_image`image power-ac`$${color_text}"
+    printf "$$color_image`image power-ac`$${color_text}"
   fi
   printf "%-4s" $${bat_percent%\%}'%'
-  [ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || echo -n "= $${bat_time%m*} "
+  [ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || printf "= $${bat_time%m*} "
 
 $endif
 
@@ -88,6 +88,6 @@ interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "net-wifi4"
 
 # DATE
 #${time %k:%M:%S %d/%m/%Y}
-echo -n "$$color_image`image clock`$${color_text}${time %k:%M %-d %b}"
+printf "$$color_image`image clock`$${color_text}${time %k:%M %-d %b}"
 
 echo
