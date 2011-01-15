@@ -22,7 +22,7 @@ function relink() {
 relink bin
 relink conkyrc
 relink conkystatusbarrc
-relink dzen
+relink dzen-icons
 relink mplayer
 mkdir -p $DESTDIR/.vim
 relink vim-plugins $DESTDIR/.vim/bundle

@@ -20,13 +20,14 @@ net_avg_samples 2
 override_utf8_locale yes
 
 TEXT
-color_image="^fg(\#FFF)"
-color_text="^fg(\#9CF)"
+color_image="^fg(\#999)"
+color_text="^fg(\#FFF)"
 color_up="^fg(\#F88)"
 color_down="^fg(\#8F8)"
+color_urgent="^fg(\#F00)"
 
 image () {
-  printf "^i(.dzen/$$1.xbm)"
+  printf "^i(.dzen-icons/$$1.xbm)"
 }
 
 interface () {
@@ -37,24 +38,30 @@ interface () {
 
   if [ -n "$$addr" -a "$$addr" != "No Address" ]
   then
-    printf "$$color_image`image $$image`"
-    printf "$${color_text}%8s$${color_down}`image down`" $$down
-    printf "$${color_text}%8s$${color_up}`image up`" $$up
+    # [[ $$down != "0B" ]] && printf "$${color_down}" || printf "$${color_text}"
+    # printf "%8s" $$down
+    # 49 char to display the colored arrow + 8 char for the text
+    printf "%57s" "$${color_down}`image net_down_02`$${color_text}$$down"
+    printf " $$color_image`image $$image` "
+    # [[ $$up != "0B" ]] && printf "$${color_up}" || printf "$${color_text}"
+    # printf "%-8s" $$up
+    # 47 char to display color and arrow + 8 char for the text
+    printf "%-55s" "$${color_text}$$up$${color_up}`image net_up_02`"
   fi
 }
 
 # KEYBOARD LAYOUT
-printf "$${color_text}[$$color_image`getxkbmap`$${color_text}] "
+printf "$${color_image}[$$color_text`getxkbmap`$${color_image}] "
 
 
 # LOAD
-# printf "$$color_image`image load`$${color_text}${loadavg 1} "
+# printf "$$color_image`image fs_01`$${color_text} ${loadavg 1} "
 
 # CPU
-printf "$$color_image`image cpu`$${color_text}%-4s" ${cpu cpu1}'%'
+printf "$$color_image`image cpu`$${color_text} %-4s" ${cpu cpu1}'%'
 
 # RAM
-#printf "$$color_image`image mem`$${color_text}${memperc}% "
+# printf "$$color_image`image mem`$${color_text} ${memperc}%% "
 
 # POWER
 ${if_match "${acpiacadapter}" != "no ac_adapters?"}
@@ -69,25 +76,52 @@ ${if_match "${acpiacadapter}" != "no ac_adapters?"}
     bat_percent="$battery_percent"
     bat_time="$battery_time"
   $endif
+  # no tailing %
+  bat_percent=$${bat_percent%\%}
+  # TODO : test this on BSD
+  bat_status="$battery_short"
+
+  # debug
+  # bat_adapter="off-line"
+  # bat_percent="80"
+  # bat_status=F
 
   if [ "$$bat_adapter" = "off-line" ]
   then
-    printf "$$color_image`image power-bat`$${color_text}"
+    printf "$$color_image"
+    if [[ $$bat_percent -gt 60 ]]
+    then
+      # 100 - 60
+      printf "`image bat_full_01`$${color_text} "
+    elif [[ $$bat_percent -gt 30 ]]
+    then
+      # 60 - 30
+      printf "`image bat_low_01`$${color_text} "
+    else
+      # 30 - 0
+      printf "`image bat_empty_01`$${color_text} "
+      ${blink [[ $$bat_percent -lt 10 ]] && printf "$$color_urgent"}
+    fi
   else
-    printf "$$color_image`image power-ac`$${color_text}"
+    printf "$$color_image`image ac_01`$${color_text} "
   fi
-  printf "%-4s" $${bat_percent%\%}'%'
+  if [[ $$bat_status = 'N' ]]
+  then
+    printf "no bat"
+  else
+    printf "%-4s" $$bat_percent'%'
+  fi
   [ "$$bat_time" = "unknown" -o -z "$$bat_time" ] || printf "= $${bat_time%m*} "
 
 $endif
 
 # NET
-interface "${addr eth0}"  "${downspeed eth0}"  "${upspeed eth0}"  "net-wired"
-interface "${addr em0}"   "${downspeed em0}"   "${upspeed em0}"   "net-wired"
-interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "net-wifi4"
+interface "${addr eth0}"  "${downspeed eth0}"  "${upspeed eth0}"  "net_wired"
+interface "${addr em0}"   "${downspeed em0}"   "${upspeed em0}"   "net_wired"
+interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "wifi_02"
 
 # DATE
 #${time %k:%M:%S %d/%m/%Y}
-printf "$$color_image`image clock`$${color_text}${time %k:%M %-d %b}"
+printf "$$color_image`image clock`$${color_text} ${time %k:%M %-d %b}"
 
 echo
