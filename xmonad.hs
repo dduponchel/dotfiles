@@ -26,7 +26,7 @@ import qualified XMonad.Actions.Submap as SM
 import qualified XMonad.Prompt         as P
 import qualified XMonad.StackSet       as W
 
-myTerminal = "urxvt"
+myTerminal = "urxvtc"
 
 -- using the "windows key" instead of "left alt" (mod1Mask)
 myModMask = mod4Mask
