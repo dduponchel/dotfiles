@@ -6,9 +6,13 @@
 # reading only $ZDOTDIR/.zshenv (if zsh) or $BASH_ENV (if bash)
 
 
-xrdb -merge ~/.Xresources
-xscreensaver -no-splash &
 session=${1:-xmonad}
+# before starting xmonad, we want a correct X db and a running urxvt daemon
+xrdb -merge ~/.Xresources
+urxvtd -q -f -o
+# if nitrogen/conky are launched after, the status bar won't start...
+nitrogen --restore # wait for the wp before lauching conky
+conky &
 
 case $session in
   fluxbox)
@@ -23,8 +27,7 @@ case $session in
     ;;
 esac
 
-conky &
-nitrogen --restore &
+xscreensaver -no-splash &
 
 # terminus is in /usr/share/fonts/local/
 [ -d /usr/share/fonts/local/ ] && xset +fp /usr/share/fonts/local/ && xset fp rehash
