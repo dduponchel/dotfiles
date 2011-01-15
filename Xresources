@@ -8,6 +8,7 @@
 *foreground:                #aaaaaa
 
 *visualBell:                on
+*.urgentOnBell:             true
 *saveLines:                 16000
 
 ! dzen2 uses the font declared here
