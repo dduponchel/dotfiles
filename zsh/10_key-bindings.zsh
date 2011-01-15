@@ -2,7 +2,9 @@
 bindkey -e
 
 [[ -n ${key[Delete]} ]]         && bindkey "${key[Delete]}"         delete-char
+[[ ${key[Control-Right]} != ${key[Right]} ]] && \
 [[ -n ${key[Control-Right]} ]]  && bindkey "${key[Control-Right]}"  forward-word
+[[ ${key[Control-Left]} != ${key[Left]} ]] && \
 [[ -n ${key[Control-Left]} ]]   && bindkey "${key[Control-Left]}"   backward-word
 [[ -n ${key[Home]} ]]           && bindkey "${key[Home]}"           beginning-of-line
 [[ -n ${key[End]} ]]            && bindkey "${key[End]}"            end-of-line
