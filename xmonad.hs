@@ -6,6 +6,7 @@ import XMonad
 import XMonad.Actions.GridSelect
 import XMonad.Actions.Plane
 import XMonad.Actions.Search
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -27,6 +28,37 @@ import qualified XMonad.Actions.Submap as SM
 import qualified XMonad.Prompt         as P
 import qualified XMonad.StackSet       as W
 
+{-
+ - I have more than one pc with xmonad, each with different uses and different programs.
+ - This startup.conf file allows me to launch apps without any
+ - "every-conf-pick-the-one-you-need" file in git.
+ - syntax example for ~/.xmonad/startup.conf :
+ - [InitProgram "workspace4" "urxvt", InitProgram "web" "firefox"]
+ -}
+
+-- data read from startup.conf
+data InitProgram = InitProgram WorkspaceId String
+  deriving (Read, Show)
+
+-- read the startup.conf file
+readInitProgram :: IO([InitProgram])
+readInitProgram = do
+  dir <- getXMonadDir
+  strInitProgram <- readFile (dir ++ "/startup.conf")
+  return $ read strInitProgram
+
+-- this startup hook will use the startup conf and spawn the processes
+myStartupHook :: Spawner -> X ()
+myStartupHook sp = do
+    setWMName "LG3D" -- java...
+    listInitProgram <- liftIO readInitProgram
+    mapM_ (\(InitProgram wid prg) -> spawnOn sp wid prg) listInitProgram
+
+{-
+ - That's it. Thank you Anthonin for this neat piece of code :)
+ -}
+
+-- using urxvtc
 myTerminal = "urxvtc"
 
 -- using the "windows key" instead of "left alt" (mod1Mask)
@@ -52,12 +84,6 @@ myManageHook = composeAll
     , className =? "Firefox"        --> doF (W.shift "web" )
     -}
     ]
-
--- The Java gui toolkit has a hardcoded list of so-called "non-reparenting" window managers.
--- xmonad is not on this list (nor are many of the newer window managers).
--- Attempts to run Java applications may result in `grey blobs' where windows should be,
--- as the Java gui code gets confused.
-myStartupHook = setWMName "LG3D"
 
 -- config for the Xmonad Prompt
 myXPConfig = defaultXPConfig
@@ -136,14 +162,15 @@ myLayout = tabbed ||| Grid ||| layoutHook defaultConfig
 
 -- do the job
 main = do
+    sp <- mkSpawner
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
-        manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+        manageHook = manageSpawn sp <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
         , terminal = myTerminal
         , modMask = myModMask
         , normalBorderColor="#000000"
         , focusedBorderColor="#009900"
         , borderWidth = 2
-        , startupHook = myStartupHook
+        , startupHook = myStartupHook sp
         , layoutHook = smartBorders (avoidStruts $ myLayout)
         , workspaces = myWorkspaces
         , keys = newKeys
