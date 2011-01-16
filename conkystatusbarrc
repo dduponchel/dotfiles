@@ -25,6 +25,7 @@ color_text="^fg(\#FFF)"
 color_up="^fg(\#F88)"
 color_down="^fg(\#8F8)"
 color_urgent="^fg(\#F00)"
+color_arch="^fg(\#08C)"
 
 image () {
   printf "^i(.dzen-icons/$$1.xbm)"
@@ -123,5 +124,10 @@ interface "${addr wlan0}" "${downspeed wlan0}" "${upspeed wlan0}" "wifi_02"
 # DATE
 #${time %k:%M:%S %d/%m/%Y}
 printf "$$color_image`image clock`$${color_text} ${time %k:%M %-d %b}"
+
+# I love Arch
+${if_existing /etc/arch-release}
+  printf " $$color_arch`image arch_10x10`"
+$endif
 
 echo
