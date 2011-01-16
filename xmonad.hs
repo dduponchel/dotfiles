@@ -12,6 +12,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
+import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
@@ -130,7 +131,8 @@ myLogHook = dynamicLogWithPP defaultPP
   }
 
 -- Layouts
-myLayout = simpleTabbed ||| Grid ||| layoutHook defaultConfig
+myLayout = tabbed ||| Grid ||| layoutHook defaultConfig
+  where tabbed = named "Tabbed" $ simpleTabbed
 
 -- do the job
 main = do
