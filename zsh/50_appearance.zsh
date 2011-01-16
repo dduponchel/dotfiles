@@ -48,6 +48,11 @@ setopt prompt_subst
 
 local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char
 
+# PROMPT
+# Don't forget to wrap colors with %{%} :
+# "This tells the shell that everything in between should not actually be printed, and terminal space should not be reserved for those characters."
+# ( http://lucentbeing.com/blog/that-256-color-thing/ )
+
 # if the last command didn't returned with 0, show the error
 prompt_previous_error='%(?..%{$bg[red]%}%B<%?>%b%{$reset_color%} )'
 prompt_date='%*'
