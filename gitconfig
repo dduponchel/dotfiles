@@ -1,0 +1,11 @@
+[user]
+  name = David Duponchel
+  email = d.duponchel@gmail.com
+[push]
+  default = current
+[color]
+  ui = auto
+[alias]
+  timeline = log --graph \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\" --all
+
+
