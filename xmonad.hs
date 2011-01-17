@@ -149,7 +149,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
 -- dynamicLog for dzen. use xmobarPP for xmobar.
 myLogHook = dynamicLogWithPP defaultPP
   { ppCurrent = dzenColor "yellow" "" . wrap "[" "]"
-  , ppVisible = pad . wrap "<" ">"
+  , ppVisible = wrap "<" ">"
   , ppHidden  = pad
   , ppUrgent  = dzenColor "red" "yellow"
   , ppTitle   = dzenColor "green"  "" . dzenEscape
