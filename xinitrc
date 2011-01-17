@@ -10,9 +10,11 @@ session=${1:-xmonad}
 # before starting xmonad, we want a correct X db and a running urxvt daemon
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
-# if nitrogen/conky are launched after, the status bar won't start...
-nitrogen --restore # wait for the wp before lauching conky
-conky &
+(
+  # if nitrogen/conky are launched after, the status bar won't start...
+  nitrogen --restore # wait for the wp before lauching conky
+  conky &
+) &
 
 case $session in
   fluxbox)
@@ -22,7 +24,7 @@ case $session in
     xsetroot -cursor_name left_ptr &
     FIFO=~/.xmonad/output
     [ ! -p ${FIFO} ] && mkfifo ${FIFO}
-    statusbar start
+    statusbar start &
     xmonad> ${FIFO} & wmpid=$!
     ;;
 esac
