@@ -1,36 +1,36 @@
-[submodule "vim-pathogen"]
-	path = vim-pathogen
+[submodule "vim/pathogen"]
+	path = vim/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim-plugins/nerdtree"]
-	path = vim-plugins/nerdtree
+[submodule "vim/plugins/nerdtree"]
+	path = vim/plugins/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "vim-plugins/nerdcommenter"]
-	path = vim-plugins/nerdcommenter
+[submodule "vim/plugins/nerdcommenter"]
+	path = vim/plugins/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "vim-plugins/vim-javascript"]
-	path = vim-plugins/vim-javascript
+[submodule "vim/plugins/vim-javascript"]
+	path = vim/plugins/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim-plugins/ack"]
-	path = vim-plugins/ack
+[submodule "vim/plugins/ack"]
+	path = vim/plugins/ack
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "vim-plugins/sparkup"]
-	path = vim-plugins/sparkup
+[submodule "vim/plugins/sparkup"]
+	path = vim/plugins/sparkup
 	url = https://github.com/sophacles/vim-bundle-sparkup.git
-[submodule "vim-plugins/vim-fugitive"]
-	path = vim-plugins/vim-fugitive
+[submodule "vim/plugins/vim-fugitive"]
+	path = vim/plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim-plugins/vividchalk"]
-	path = vim-plugins/vividchalk
+[submodule "vim/plugins/vividchalk"]
+	path = vim/plugins/vividchalk
 	url = https://github.com/tpope/vim-vividchalk.git
-[submodule "vim-plugins/vim-trailing-whitespace"]
-	path = vim-plugins/vim-trailing-whitespace
+[submodule "vim/plugins/vim-trailing-whitespace"]
+	path = vim/plugins/vim-trailing-whitespace
 	url = https://github.com/bronson/vim-trailing-whitespace.git
-[submodule "vim-plugins/Gundo"]
-	path = vim-plugins/Gundo
+[submodule "vim/plugins/Gundo"]
+	path = vim/plugins/Gundo
 	url = https://github.com/vim-scripts/Gundo.git
-[submodule "vim-plugins/SearchComplete"]
-	path = vim-plugins/SearchComplete
+[submodule "vim/plugins/SearchComplete"]
+	path = vim/plugins/SearchComplete
 	url = https://github.com/vim-scripts/SearchComplete.git
-[submodule "vim-plugins/vim-coffee-script"]
-	path = vim-plugins/vim-coffee-script
+[submodule "vim/plugins/vim-coffee-script"]
+	path = vim/plugins/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git

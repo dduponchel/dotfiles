@@ -1,48 +1,53 @@
 #!/usr/bin/env bash
 
 # readlink -f ? forget it, -f isn't a valid option on BSD.
-cd `dirname $0`
-DOTFILES=$PWD
+DOTFILES=$( (cd -P $(dirname $0) && pwd) )
 
 DESTDIR=${1:-~}
 [ ! -d $DESTDIR ] && echo "$DESTDIR is not a folder" 1>&2 && exit 1
+cd $DESTDIR
 
 # relink config_file [dest]
-# If dest is not specified, dest = ~/.${config_file}
+# If dest is not specified, dest = ~/.${config_file without path}
 # remove dest if possible and create a symlink from config_file to dest.
 function relink() {
   config_file=$DOTFILES/$1
-  dest=${2:-$DESTDIR/.$1}
+  dest=${2:-.${1##*/}}
+  dest_dir=`dirname $dest`
 
   # a broken symlink isn't a file...
   [ -e $dest -o -L $dest ] && rm -ri $dest
+  [[ ! -d $dest_dir ]] && mkdir -p $dest_dir
   ln -sn $config_file $dest
 }
 
 relink bin
-relink conkyrc
-relink conkystatusbarrc
-relink dzen-icons
-relink mplayer
-mkdir -p $DESTDIR/.vim
-relink vim-plugins $DESTDIR/.vim/bundle
-relink vim-pathogen/autoload $DESTDIR/.vim/autoload
-relink vimrc
-relink gitconfig
-relink xinitrc
-relink Xresources
-relink zsh
-relink profile $DESTDIR/.zprofile
-# for bash compatibility, and xinitrc (see comments)
-relink profile $DESTDIR/.bash_profile
-relink bashrc
-relink zshrc
-relink npmrc
 
-mkdir -p $DESTDIR/.xmonad
-relink xmonad.hs $DESTDIR/.xmonad/xmonad.hs
+relink mplayer
+
+relink git/gitconfig
+
+relink npm/npmrc
+
+relink x/conkyrc
+relink x/xinitrc
+relink x/Xresources
+
+relink {,.}xmonad/xmonad.hs
+relink xmonad/conkystatusbarrc
+relink xmonad/dzen-icons
+
+relink vim/plugins .vim/bundle
+relink vim/pathogen/autoload .vim/autoload
+relink vim/vimrc
+
+relink shell/zsh
+relink shell/profile .zprofile
+# for bash compatibility, and xinitrc (see comments)
+relink shell/profile .bash_profile
+relink shell/bashrc
+relink shell/zshrc
 
 # quodlibet plugins : not the ideal way to handle my changes...
-mkdir -p $DESTDIR/.quodlibet/plugins/{editing,songsmenu}/
-relink quodlibet/plugins/editing/iconv.py
-relink quodlibet/plugins/songsmenu/openwith.py
+relink {,.}quodlibet/plugins/editing/iconv.py
+relink {,.}quodlibet/plugins/songsmenu/openwith.py
