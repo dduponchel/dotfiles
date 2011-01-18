@@ -148,16 +148,16 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
 
 -- dynamicLog for dzen. use xmobarPP for xmobar.
 myLogHook = dynamicLogWithPP defaultPP
-  { ppCurrent = dzenColor "yellow" "" . wrap "[" "]"
-  , ppVisible = wrap "<" ">"
-  , ppHidden  = pad
+  { ppCurrent = dzenColor "#09F" "" -- wrap "[" "]"
+  , ppVisible = dzenColor "white" "" -- wrap "<" ">"
+  -- , ppHiddenNoWindows  = dzenColor "#444" ""
   , ppUrgent  = dzenColor "red" "yellow"
-  , ppTitle   = dzenColor "green"  "" . dzenEscape
-  , ppWsSep   = ""
+  , ppTitle   = dzenEscape
+  , ppWsSep   = " "
   }
 
 -- Layouts
-myLayout = tabbed ||| Grid ||| layoutHook defaultConfig
+myLayout = noBorders tabbed ||| Grid ||| layoutHook defaultConfig
   where tabbed = named "Tabbed" $ simpleTabbed
 
 -- do the job

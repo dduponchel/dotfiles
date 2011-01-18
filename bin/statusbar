@@ -9,18 +9,15 @@ case $1 in
   start)
 
     # bar :    |--   xmonad bar    --||-- conky bar --||-trayer-|
-    # lenght : | X percent of screen ||  what's left  || fixed  |
+    # length : |     what's left     ||     fixed     || fixed  |
 
     screen_width=$(xrandr | grep '*'|head -n 1|sed -r "s/[[:space:]]*//;s/x.*//")
 
     systray_width_param=5
     # 1 "trayer width" ~= 10px
     systray_width=$(($systray_width_param * 10))
-
-    wm_bar_ratio_percent=50
-    wm_bar_width=$(($screen_width * $wm_bar_ratio_percent / 100))
-
-    status_bar_width=$(($screen_width - $wm_bar_width - $systray_width))
+    status_bar_width=400 # px
+    wm_bar_width=$(($screen_width - $systray_width - $status_bar_width))
 
     if fc-list | grep -i terminus 2>&1 > /dev/null
     then
