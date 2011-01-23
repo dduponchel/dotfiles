@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
@@ -10,6 +11,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
+import XMonad.Layout.ToggleLayouts
 import XMonad.Prompt
 import qualified Data.Map        as M
 import qualified XMonad.StackSet as W
@@ -95,7 +97,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     -- go to a window
     , ((modMask .|. shiftMask, xK_g),  goToSelected defaultGSConfig)
     -- toggle the space for the statusbar
-    , ((modMask, xK_b ), sendMessage ToggleStruts)
+    , ((modMask, xK_b),                sendMessage ToggleStruts)
+    -- set window fullscreen
+    , ((modMask, xK_f),                sendMessage ToggleLayout)
+    -- focus urgent window
+    , ((modMask, xK_u),                focusUrgent)
     ]
     ++
     -- same as /usr/share/xmonad-0.9.1/man/xmonad.hs, but add xK_0
@@ -119,7 +125,8 @@ myLogHook = dynamicLogWithPP defaultPP
   }
 
 -- Layouts
-myLayout = noBorders tabbed ||| Grid ||| layoutHook defaultConfig
+myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
+  (noBorders tabbed ||| Grid ||| layoutHook defaultConfig)
   where tabbed = named "Tabbed" $ simpleTabbed
 
 -- do the job
