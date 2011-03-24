@@ -4,6 +4,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -37,11 +38,10 @@ readInitProgram = do
   return $ read strInitProgram
 
 -- this startup hook will use the startup conf and spawn the processes
-myStartupHook :: Spawner -> X ()
-myStartupHook sp = do
+myStartupHook = do
     setWMName "LG3D" -- java...
     listInitProgram <- liftIO readInitProgram
-    mapM_ (\(InitProgram wid prg) -> spawnOn sp wid prg) listInitProgram
+    mapM_ (\(InitProgram wid prg) -> spawnOn wid prg) listInitProgram
 
 {-
  - That's it. Thank you Anthonin for this neat piece of code :)
@@ -133,7 +133,7 @@ myLogHook = dynamicLogWithPP defaultPP
   , ppUrgent  = dzenColor "red" "yellow" . pad
   , ppTitle   = dzenEscape
   , ppWsSep   = ""
-  } >> updatePointer (Relative 0.5 0.5)
+  } >> updatePointer (Relative 0.5 0.5) >> takeTopFocus
 
 -- Layouts
 myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
@@ -142,15 +142,14 @@ myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
 
 -- do the job
 main = do
-    sp <- mkSpawner
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
-        manageHook = manageSpawn sp <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
+        manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
         , terminal = myTerminal
         , modMask = myModMask
         , normalBorderColor="#000000"
         , focusedBorderColor="#009900"
         , borderWidth = 2
-        , startupHook = myStartupHook sp
+        , startupHook = myStartupHook
         , layoutHook = smartBorders (avoidStruts $ myLayout)
         , workspaces = myWorkspaces
         , keys = newKeys
