@@ -21,10 +21,16 @@ case $1 in
 
     if fc-list | grep -i terminus 2>&1 > /dev/null
     then
-      dzen_default_args='-fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
+      # small screens
+      #dzen_default_args='-fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
+      # big screens
+      dzen_default_args='-fn -*-terminus-*-*-*-*-14-*-*-*-*-*-*-* -h 18'
     else
       echo 'terminus font not found, using fixed instead' 1>&2
-      dzen_default_args='-fn -*-fixed-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
+      # small screens
+      #dzen_default_args='-fn -*-fixed-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
+      # big screens
+      dzen_default_args='-fn -*-fixed-*-*-*-*-14-*-*-*-*-*-*-* -h 18'
     fi
 
     # trayer

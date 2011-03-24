@@ -116,12 +116,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
 
 -- dynamicLog for dzen. use xmobarPP or dzenPP for nice defaults
 myLogHook = dynamicLogWithPP defaultPP
+  {-- small screens
   { ppCurrent = dzenColor "#09F" "" -- wrap "[" "]"
   , ppVisible = dzenColor "white" "" -- wrap "<" ">"
   -- , ppHiddenNoWindows  = dzenColor "#444" ""
   , ppUrgent  = dzenColor "red" "yellow"
   , ppTitle   = dzenEscape
   , ppWsSep   = " "
+  --}
+  {-- big screens --}
+  { ppCurrent = dzenColor "#09F"  "" . pad -- wrap "[" "]"
+  , ppVisible = dzenColor "white" "" . pad -- wrap "<" ">"
+  , ppHidden  = pad
+  , ppHiddenNoWindows  = dzenColor "#444" "" . pad
+  , ppUrgent  = dzenColor "red" "yellow" . pad
+  , ppTitle   = dzenEscape
+  , ppWsSep   = ""
   }
 
 -- Layouts
