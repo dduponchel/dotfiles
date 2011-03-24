@@ -6,6 +6,9 @@
 [color]
   ui = auto
 [alias]
-  timeline = log --graph \"--pretty=format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\" --all
-
-
+  timeline = log --graph --pretty=\"format:%C(yellow bold)%h%Creset by %C(red)%an%Creset (%ar)%C(cyan bold)%d%Creset%n%s%n%b\" --all
+  lpush = "!git --no-pager log origin/$(git currentbranch)..HEAD --oneline"
+  lpull = "!git --no-pager log HEAD..origin/$(git currentbranch) --oneline"
+  whatsnew = "!git diff origin/$(git currentbranch)...HEAD"
+  whatscoming = "!git diff HEAD...origin/$(git currentbranch)"
+  currentbranch = "!git branch | grep \"^\\*\" | cut -d \" \" -f 2"
