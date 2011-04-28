@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -132,7 +133,7 @@ myLogHook = dynamicLogWithPP defaultPP
   , ppUrgent  = dzenColor "red" "yellow" . pad
   , ppTitle   = dzenEscape
   , ppWsSep   = ""
-  }
+  } >> updatePointer (Relative 0.5 0.5)
 
 -- Layouts
 myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
