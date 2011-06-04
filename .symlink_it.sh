@@ -48,6 +48,9 @@ relink shell/profile .bash_profile
 relink shell/bashrc
 relink shell/zshrc
 
+relink ackrc
+relink tmux.conf
+
 # quodlibet plugins : not the ideal way to handle my changes...
 relink {,.}quodlibet/plugins/editing/iconv.py
 relink {,.}quodlibet/plugins/songsmenu/openwith.py

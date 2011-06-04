@@ -13,9 +13,6 @@
 [submodule "vim/plugins/ack"]
 	path = vim/plugins/ack
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "vim/plugins/sparkup"]
-	path = vim/plugins/sparkup
-	url = https://github.com/sophacles/vim-bundle-sparkup.git
 [submodule "vim/plugins/vim-fugitive"]
 	path = vim/plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -34,3 +31,18 @@
 [submodule "vim/plugins/vim-coffee-script"]
 	path = vim/plugins/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "vim/plugins/vim-css-color"]
+	path = vim/plugins/vim-css-color
+	url = https://github.com/skammer/vim-css-color.git
+[submodule "vim/plugins/snipmate"]
+	path = vim/plugins/snipmate
+	url = https://github.com/msanders/snipmate.vim
+[submodule "vim/plugins/vim-surround"]
+	path = vim/plugins/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "vim/plugins/vim-taglist-plus"]
+	path = vim/plugins/vim-taglist-plus
+	url = https://github.com/int3/vim-taglist-plus.git
+[submodule "vim/plugins/Command-T"]
+	path = vim/plugins/Command-T
+	url = https://github.com/wincent/Command-T.git
