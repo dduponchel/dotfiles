@@ -46,7 +46,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""                    # Text to display if the branch
 # prompts. Substitutions within prompts do not affect the command status.
 setopt prompt_subst
 
-local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char
+local prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char prompt_extras
 
 # PROMPT
 # Don't forget to wrap colors with %{%} :
@@ -70,6 +70,13 @@ prompt_path='%{$fg_bold[blue]%}%2~'
 # # for root, $ for user
 prompt_last_char='%(!.#.$)'
 
-PROMPT=${prompt_previous_error}${prompt_date}' '${prompt_main_color}${prompt_user}'@'${prompt_host}' '${prompt_path}'$(git_prompt_info)%{$reset_color%} '${prompt_last_char}' '
+prompt_extras=''
+# vim :sh
+if [ -n "${VIM}" ]
+then
+  prompt_extras="${prompt_extras}%{$fg_bold[yellow]%}[VIM]%{$reset_color%} "
+fi
 
-unset prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char
+PROMPT=${prompt_previous_error}${prompt_date}' '${prompt_main_color}${prompt_user}'@'${prompt_host}' '${prompt_path}'$(git_prompt_info)%{$reset_color%} '${prompt_extras}${prompt_last_char}' '
+
+unset prompt_previous_error prompt_date prompt_main_color prompt_user prompt_host prompt_path prompt_last_char prompt_extras
