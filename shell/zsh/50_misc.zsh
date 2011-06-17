@@ -16,3 +16,14 @@ command_exists rlwrap && alias telnet="rlwrap telnet $@"
 alias :q="exit"
 alias vim="vim -p"
 alias ss="sudo su -"
+
+
+function down4me() {
+  curl -s "http://www.downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g'
+}
+
+function getip {
+  ifconfig | grep "inet " | awk '{ print $2 }'
+  res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
+  echo "Public IP : $(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')"
+}
