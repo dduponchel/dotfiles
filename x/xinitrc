@@ -5,6 +5,10 @@
 # The interpreter of this script is then a non interactive shell,
 # reading only $ZDOTDIR/.zshenv (if zsh) or $BASH_ENV (if bash)
 
+# my logs have nothing to do in /var/log/slim.log
+echo -n "xinitrc : "
+date
+exec >> .session.log 2>> .session.err
 
 session=${1:-xmonad}
 # before starting xmonad, we want a correct X db and a running urxvt daemon
