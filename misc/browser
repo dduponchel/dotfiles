@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# inspired by https://gist.github.com/318247
+
+# is FD 0 opened ?
+if [ -t 0 ]; then
+  if [ -n "$1" ]; then
+    $BROWSER "$1"
+  else
+    echo "Usage : browser file or echo html | browser"
+  fi
+else
+  f="/tmp/browser.$RANDOM.html"
+  cat /dev/stdin > $f
+  $BROWSER "$f"
+fi
