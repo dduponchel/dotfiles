@@ -5,6 +5,12 @@ FIFO=~/.xmonad/output
 # conkystatusbarrc needs to be in home for images
 cd ~
 
+lightweight_shell=sh
+if command_exists dash
+then
+   lightweight_shell=dash
+fi
+
 case $1 in
   start)
 
@@ -38,7 +44,7 @@ case $1 in
     # xmonad bar
     dzen2 $dzen_default_args -ta l -w ${wm_bar_width} <${FIFO} &
     # conky bar
-    conky -c ~/.conkystatusbarrc 2> /dev/null |bash|dzen2 $dzen_default_args -ta r -w $status_bar_width -x $wm_bar_width &
+    conky -c ~/.conkystatusbarrc 2> /dev/null |$lightweight_shell|dzen2 $dzen_default_args -ta r -w $status_bar_width -x $wm_bar_width &
     ;;
 
   stop)
