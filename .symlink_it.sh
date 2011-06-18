@@ -47,6 +47,7 @@ relink shell/profile .zprofile
 relink shell/profile .bash_profile
 relink shell/bashrc
 relink shell/zshrc
+relink shell/common .shell
 
 relink ackrc
 relink tmux.conf

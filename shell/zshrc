@@ -1,4 +1,7 @@
 export ZSH=~/.zsh
+SHARED_CONFIG=~/.shell
 
+source ~/.zprofile
+for config_file ($SHARED_CONFIG/rc/**/*.sh) source $config_file
 for config_file ($ZSH/**/*.zsh) source $config_file
-unset config_file
+unset config_file SHARED_CONFIG

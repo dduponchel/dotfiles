@@ -2,8 +2,6 @@
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=11000 # larger, see HIST_EXPIRE_DUPS_FIRST
 SAVEHIST=10000
-# Show history
-alias history='fc -l 1'
 
 # Do not enter command lines into the history list if they are duplicates of the previous event.
 setopt hist_ignore_dups

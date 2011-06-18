@@ -1,27 +1,5 @@
 autoload colors; colors;
 
-# Enable colors
-command_exists dircolors && eval $(dircolors -b)
-if [ "$(uname|grep Linux)" ]
-then
-  alias ls='ls --color=auto -ph'
-  alias tree='tree -CF'
-elif [ "$(uname|grep BSD)" ]
-then
-  alias ls='ls -FGh'
-  alias tree='tree -CF'
-fi
-
-# less handles colors :)
-alias less='less -R'
-
-export GREP_OPTIONS='--color=auto'
-#export GREP_COLOR='1;32'
-
-# Human-readable
-alias df='df -h'
-alias du='du -h'
-
 # get the name of the branch we are on
 git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
