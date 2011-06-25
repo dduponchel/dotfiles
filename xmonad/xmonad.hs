@@ -74,15 +74,6 @@ myManageHook = composeAll
     -}
     ]
 
--- config for the Xmonad Prompt
-myXPConfig = defaultXPConfig
-    { fgColor  = "#55FF99"
-    , bgColor  = "black"
-    , bgHLight = "black"
-    , fgHLight = "red"
-    , position = Top
-    }
-
 -- Key bindings.
 newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
