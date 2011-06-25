@@ -1,4 +1,5 @@
 import XMonad
+import System.IO
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
@@ -107,9 +108,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     ]
 
 -- dynamicLog for dzen. use xmobarPP or dzenPP for nice defaults
-myLogHook = dynamicLogWithPP defaultPP
+myLogHook namedPipe = dynamicLogWithPP defaultPP
+  { ppOutput  = hPutStrLn namedPipe
   {-- small screens
-  { ppCurrent = dzenColor "#09F" "" -- wrap "[" "]"
+  , ppCurrent = dzenColor "#09F" "" -- wrap "[" "]"
   , ppVisible = dzenColor "white" "" -- wrap "<" ">"
   -- , ppHiddenNoWindows  = dzenColor "#444" ""
   , ppUrgent  = dzenColor "red" "yellow"
@@ -117,7 +119,7 @@ myLogHook = dynamicLogWithPP defaultPP
   , ppWsSep   = " "
   --}
   {-- big screens --}
-  { ppCurrent = dzenColor "#09F"  "" . pad -- wrap "[" "]"
+  , ppCurrent = dzenColor "#09F"  "" . pad -- wrap "[" "]"
   , ppVisible = dzenColor "white" "" . pad -- wrap "<" ">"
   , ppHidden  = pad
   , ppHiddenNoWindows  = dzenColor "#444" "" . pad
@@ -134,6 +136,12 @@ myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
 -- do the job
 main = do
     sp <- mkSpawner
+    dir <- getXMonadDir
+    {- namedPipe <- openFile (dir ++ "/output") AppendMode -}
+    {- AppendMode doesn't works, see http://www.haskell.org/haskellwiki/GHC:FAQ#When_I_open_a_FIFO_.28named_pipe.29_and_try_to_read_from_it.2C_I_get_EOF_immediately. -}
+    {- TODO : test on BSD ! -}
+    namedPipe <- openFile (dir ++ "/output") ReadWriteMode
+    hSetBuffering namedPipe LineBuffering
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
         manageHook = manageSpawn sp <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
         , terminal = myTerminal
@@ -145,5 +153,5 @@ main = do
         , layoutHook = smartBorders (avoidStruts $ myLayout)
         , workspaces = myWorkspaces
         , keys = newKeys
-        , logHook = myLogHook
+        , logHook = myLogHook namedPipe
         }
