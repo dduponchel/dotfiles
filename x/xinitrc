@@ -6,8 +6,7 @@
 # reading only $ZDOTDIR/.zshenv (if zsh) or $BASH_ENV (if bash)
 
 # my logs have nothing to do in /var/log/slim.log
-echo -n "xinitrc : "
-date
+echo "xinitrc : `date`"
 exec >> .session.log 2>> .session.err
 
 session=${1:-xmonad}
@@ -15,7 +14,6 @@ session=${1:-xmonad}
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
 (
-  # if nitrogen/conky are launched after, the status bar won't start...
   nitrogen --restore # wait for the wp before lauching conky
   conky &
 ) &
@@ -39,3 +37,5 @@ xscreensaver -no-splash &
 [ -d /usr/share/fonts/local/ ] && xset +fp /usr/share/fonts/local/ && xset fp rehash
 
 wait $wmpid # like exec myWM but more flexible
+
+pkill -HUP ssh-agent
