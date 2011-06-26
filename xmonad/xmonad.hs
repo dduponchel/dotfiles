@@ -75,6 +75,13 @@ myManageHook = composeAll
     -}
     ]
 
+{- spawn windows on launched workspace (instead of current workspace) -}
+myDmenu :: X ()
+myDmenu = do
+  currentWorkspace <- fmap W.currentTag (gets windowset)
+  spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
+
+
 -- Key bindings.
 newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
@@ -99,6 +106,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     , ((modMask, xK_f),                sendMessage ToggleLayout)
     -- focus urgent window
     , ((modMask, xK_u),                focusUrgent)
+    -- override default
+    , ((modMask, xK_p),                myDmenu)
     ]
     ++
     -- same as /usr/share/xmonad-0.9.1/man/xmonad.hs, but add xK_0
