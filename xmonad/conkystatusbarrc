@@ -39,7 +39,7 @@ interface () {
 
   if [ -n "$$addr" -a "$$addr" != "No Address" ]
   then
-    # [[ $$down != "0B" ]] && printf "$${color_down}" || printf "$${color_text}"
+    # [ $$down != "0B" ] && printf "$${color_down}" || printf "$${color_text}"
     # printf "%8s" $$down
     # 49 char to display the colored arrow + 8 char for the text
     printf "%57s" "$${color_down}`image net_down_02`$${color_text}$$down"
@@ -55,11 +55,11 @@ interface () {
 printf "$${color_image}[$$color_text`getxkbmap`$${color_image}] "
 
 
-# LOAD
-# printf "$$color_image`image fs_01`$${color_text} ${loadavg 1} "
-
 # CPU
-printf "$$color_image`image cpu`$${color_text} %-4s" ${cpu cpu1}'%'
+printf "$$color_image`image cpu`$${color_text} %-4s" ${cpu cpu0}'%'
+
+# LOAD
+printf "$$color_image`image fs_01`$${color_text} ${loadavg 1} "
 
 # RAM
 # printf "$$color_image`image mem`$${color_text} ${memperc}%% "
@@ -90,23 +90,23 @@ ${if_match "${acpiacadapter}" != "no ac_adapters?"}
   if [ "$$bat_adapter" = "off-line" ]
   then
     printf "$$color_image"
-    if [[ $$bat_percent -gt 60 ]]
+    if [ $$bat_percent -gt 60 ]
     then
       # 100 - 60
       printf "`image bat_full_01`$${color_text} "
-    elif [[ $$bat_percent -gt 30 ]]
+    elif [ $$bat_percent -gt 30 ]
     then
       # 60 - 30
       printf "`image bat_low_01`$${color_text} "
     else
       # 30 - 0
       printf "`image bat_empty_01`$${color_text} "
-      ${blink [[ $$bat_percent -lt 10 ]] && printf "$$color_urgent"}
+      ${blink [ $$bat_percent -lt 10 ] && printf "$$color_urgent"}
     fi
   else
     printf "$$color_image`image ac_01`$${color_text} "
   fi
-  if [[ $$bat_status = 'N' ]]
+  if [ "$$bat_status" = 'N' ]
   then
     printf "no bat"
   else

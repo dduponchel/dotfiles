@@ -7,8 +7,3 @@ findFileInFpath() {
     [ -f "$zshPath/$wantedFile" ] && echo "$zshPath/$wantedFile" && return
   done
 }
-
-# check if a command exists
-command_exists() {
-  type $1 > /dev/null 2>&1
-}

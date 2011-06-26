@@ -4,8 +4,11 @@
 *faceName:                  xft:Inconsolata:pixelsize=18
 *font:                      xft:Inconsolata:pixelsize=18
 
-*background:                #000000
-*foreground:                #aaaaaa
+! *background is too generic and affect QT interfaces as well
+urxvt*background:                #000000
+xterm*background:                #000000
+urxvt*foreground:                #aaaaaa
+xterm*foreground:                #aaaaaa
 
 ! found on https://github.com/sykora/etc/blob/master/x/xdefaults
 urxvt.color0: #000000

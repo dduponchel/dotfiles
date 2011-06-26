@@ -20,7 +20,7 @@ unset ps_command
 # zstyle ':completion:*:rm:*' ignore-line yes
 # zstyle ':completion:*:cp:*' ignore-line yes
 # zstyle ':completion:*:mv:*' ignore-line yes
-zstyle ':completion:*:*:*' ignore-line yes
+zstyle ':completion:*:*:*' ignore-line other
 
 # If this option is unset, output flow control via start/stop  characters  (usually  assigned  to
 # ^S/^Q) is disabled in the shell's editor.

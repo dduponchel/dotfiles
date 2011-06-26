@@ -47,7 +47,19 @@ relink shell/profile .zprofile
 relink shell/profile .bash_profile
 relink shell/bashrc
 relink shell/zshrc
+relink shell/common .shell
+
+relink ackrc
+relink tmux.conf
 
 # quodlibet plugins : not the ideal way to handle my changes...
 relink {,.}quodlibet/plugins/editing/iconv.py
 relink {,.}quodlibet/plugins/songsmenu/openwith.py
+
+# TODO find why bash doesn't expand "for profile in .mozilla/firefox/*/prefs.js"
+# with no match (should do 0 loop)
+for profile in `ls .mozilla/firefox/*/prefs.js 2> /dev/null`
+do
+  prefs=${profile%prefs.js}user.js
+  relink firefox/user.js $prefs
+done

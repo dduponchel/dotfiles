@@ -1,18 +1,3 @@
-alias d='dirs -v'
-
-cd() {
-  builtin cd "$@" && ls
-}
-
-take() {
-  mkdir -p $1
-  cd $1
-}
-
-# List direcory contents
-alias l='ls -la'
-alias ll='ls -l'
-alias sl=ls # often screw this up
 
 # If a command is issued that can't be executed as a normal command, and the command is the name
 # of a directory, perform the cd command to that directory.

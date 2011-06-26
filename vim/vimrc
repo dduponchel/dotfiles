@@ -101,6 +101,11 @@ map <a-down> <C-w>j
 map <a-up> <C-w>k
 map <a-right> <C-w>l
 
+" Start scrolling three lines before horizontal border of window.
+set scrolloff=3
+" Start scrolling three columns before vertical border of window.
+set sidescrolloff=3
+
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
