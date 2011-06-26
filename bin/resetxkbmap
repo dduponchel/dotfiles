@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# This script doesn't do much. But it allow to have only one place for the default
+# keyboard layout. If I ever change, the transition will be more smoother.
+setxkbmap us

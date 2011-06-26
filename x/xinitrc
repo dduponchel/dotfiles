@@ -31,6 +31,8 @@ case $session in
     ;;
 esac
 
+resetxkbmap
+
 xscreensaver -no-splash &
 
 # terminus is in /usr/share/fonts/local/
