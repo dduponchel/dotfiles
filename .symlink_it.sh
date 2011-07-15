@@ -3,6 +3,9 @@
 # readlink -f ? forget it, -f isn't a valid option on BSD.
 DOTFILES=$( (cd -P $(dirname $0) && pwd) )
 
+C_SEPARATOR="\033[1;34;40m"
+C_CLEAR="\033[1;0m"
+
 DESTDIR=${1:-~}
 [ ! -d $DESTDIR ] && echo "$DESTDIR is not a folder" 1>&2 && exit 1
 cd $DESTDIR
@@ -15,9 +18,20 @@ function relink() {
   dest=${2:-.${1##*/}}
   dest_dir=`dirname $dest`
 
-  # a broken symlink isn't a file...
-  [ -e $dest -o -L $dest ] && rm -ri $dest
   [[ ! -d $dest_dir ]] && mkdir -p $dest_dir
+  printf "${dest} ${C_SEPARATOR}:: ${C_CLEAR}"
+  if [ -L "$dest" ]
+  then
+    printf "symbolic link, updating\n"
+    rm -f "$dest"
+    # a broken symlink isn't a file...
+  elif [ -e "$dest" ]
+  then
+    printf "file, "
+    rm -ri $dest
+  else
+    printf "not found, creating\n"
+  fi
   ln -sn $config_file $dest
 }
 
