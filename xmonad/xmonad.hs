@@ -78,8 +78,9 @@ myManageHook = composeAll
 {- spawn windows on launched workspace (instead of current workspace) -}
 myDmenu :: X ()
 myDmenu = do
+  sp <- mkSpawner
   currentWorkspace <- fmap W.currentTag (gets windowset)
-  spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
+  spawnOn sp currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
 
 
 -- Key bindings.
