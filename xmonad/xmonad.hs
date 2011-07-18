@@ -75,10 +75,21 @@ myManageHook = composeAll
     -}
     ]
 
+{- spawn windows on launched workspace (instead of current workspace) -}
+myDmenu :: X ()
+myDmenu = do
+  currentWorkspace <- fmap W.currentTag (gets windowset)
+  spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
+
+
 -- Key bindings.
 newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
-    [ ((modMask .|. shiftMask, xK_z),  spawn "xscreensaver-command -lock")
+    [ ((modMask .|. shiftMask, xK_z),  spawn "resetxkbmap && xscreensaver-command -lock")
+    {-- I must NOT fail to lock my session, even in azerty : my coworkers are quick ;-) --}
+    , ((modMask .|. shiftMask, xK_w),  spawn "resetxkbmap && xscreensaver-command -lock")
+    {- mod + l may be easier -}
+    , ((modMask, xK_l),                spawn "resetxkbmap && xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
     , ((modMask, xK_Insert),           spawn "amixer -c 0 set Master 2dB+")
     , ((modMask, xK_Delete),           spawn "amixer -c 0 set Master 1dB-")
@@ -95,6 +106,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     , ((modMask, xK_f),                sendMessage ToggleLayout)
     -- focus urgent window
     , ((modMask, xK_u),                focusUrgent)
+    -- override default
+    , ((modMask, xK_p),                myDmenu)
     ]
     ++
     -- same as /usr/share/xmonad-0.9.1/man/xmonad.hs, but add xK_0
