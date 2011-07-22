@@ -80,7 +80,8 @@ myDmenu :: X ()
 myDmenu = do
   sp <- mkSpawner
   currentWorkspace <- fmap W.currentTag (gets windowset)
-  spawnOn sp currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
+  {- spawnOn sp currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\"" -}
+  spawnOn sp currentWorkspace "exe=`IFS=:;lsx $PATH|sort -u|dmenu` && eval \"exec $exe\""
 
 
 -- Key bindings.
