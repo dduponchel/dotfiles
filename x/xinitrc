@@ -13,10 +13,8 @@ session=${1:-xmonad}
 # before starting xmonad, we want a correct X db and a running urxvt daemon
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
-(
-  nitrogen --restore # wait for the wp before lauching conky
-  conky &
-) &
+
+nitrogen --restore &
 
 case $session in
   fluxbox)
