@@ -36,6 +36,8 @@ urxvt.color15: #FFFFFF
 ! dzen2 uses the font declared here
 ! Override *font to avoid problems
 dzen2*font:                 fixed
+! display: unable to load font xft:Inconsolata:pixelsize=18 : Resource temporarily unavailable
+display*font:               fixed
 
 !!
 ! xterm specific
