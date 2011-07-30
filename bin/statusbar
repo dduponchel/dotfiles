@@ -17,13 +17,11 @@ case $1 in
     # bar :    |--   xmonad bar    --||-- conky bar --||-trayer-|
     # length : |     what's left     ||     fixed     || fixed  |
 
-    screen_width=$(xrandr | grep '*'|head -n 1|sed -r "s/[[:space:]]*//;s/x.*//")
+    screen_width=$(xrandr | grep '*'|head -n 1|sed -r "s/[[:space:]]*//;s/x.*//") # px
 
-    systray_width_param=5
-    # 1 "trayer width" ~= 10px
-    systray_width=$(($systray_width_param * 10))
-    status_bar_width=400 # px
-    wm_bar_width=$(($screen_width - $systray_width - $status_bar_width))
+    systray_width=50 # px
+    status_bar_width=450 # px
+    wm_bar_width=$(($screen_width - $systray_width - $status_bar_width)) # px
 
     if fc-list | grep -i terminus 2>&1 > /dev/null
     then
@@ -40,7 +38,7 @@ case $1 in
     fi
 
     # trayer
-    trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width $systray_width_param --height 18 --transparent true --tint 0x000000 &
+    trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype pixel --width $systray_width --height 18 --transparent true --tint 0x000000 --alpha 0 &
     # xmonad bar
     dzen2 $dzen_default_args -ta l -w ${wm_bar_width} <${FIFO} &
     # conky bar
