@@ -25,17 +25,16 @@ case $1 in
 
     if fc-list | grep -i terminus 2>&1 > /dev/null
     then
-      # small screens
-      #dzen_default_args='-fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
-      # big screens
-      dzen_default_args='-fn -*-terminus-*-*-*-*-14-*-*-*-*-*-*-* -h 18'
+      font=terminus
     else
       echo 'terminus font not found, using fixed instead' 1>&2
-      # small screens
-      #dzen_default_args='-fn -*-fixed-*-*-*-*-12-*-*-*-*-*-*-* -h 18'
-      # big screens
-      dzen_default_args='-fn -*-fixed-*-*-*-*-14-*-*-*-*-*-*-* -h 18'
+      font=fixed
     fi
+
+    # small screens
+    # dzen_default_args="-fn -*-${font}-*-*-*-*-12-*-*-*-*-*-*-* -h 18 -bg black"
+    # big screens
+    dzen_default_args="-fn -*-${font}-*-*-*-*-14-*-*-*-*-*-*-* -h 18 -bg black"
 
     # trayer
     trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype pixel --width $systray_width --height 18 --transparent true --tint 0x000000 --alpha 0 &
