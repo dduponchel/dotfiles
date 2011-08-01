@@ -138,8 +138,77 @@ vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
 " BUNDLE: Gundo
 nmap <leader>u :GundoToggle<cr>
 
-" BUNDLE: vim-fugitive
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
 " jmvc uses .ejs as template files
 autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+
+" Section: statusline {{{1
+" see :help 'statusline
+
+"statusline setup
+set statusline=%<%f " Path to the file in the buffer
+
+"display a warning if fileformat isnt unix
+function StatuslineWarnFileFormat(fileFormat)
+  if a:fileFormat != 'unix'
+    return '['.a:fileFormat.']'
+  else
+    return ''
+  endif
+endfunction
+set statusline+=%(\ %#warningmsg#%{StatuslineWarnFileFormat(&ff)}%*%)
+
+"display a warning if file encoding isnt utf-8
+function StatuslineWarnEncoding(encoding)
+  if a:encoding != 'utf-8' && a:encoding != ''
+    return '['.a:encoding.']'
+  else
+    return ''
+  endif
+endfunction
+set statusline+=%(\ %#warningmsg#%{StatuslineWarnEncoding(&fenc)}%*%)
+
+" flags : modified, read only, help and fugitive
+set statusline+=%(\ [%M%R%H%{fugitive#statusline()}]%)
+
+set statusline+=%= " right side
+" line number, column number, virtual column number and percentage of file
+set statusline+=%-14.(%l,%c%V%)\ %P
+
+" }}}1
+
+" Section: statusline colors {{{1
+" Don't know myself if putting colors here is a good idea.
+" I will know soon enough.
+
+" Function: InsertStatuslineColor {{{2
+"   This function change the color of the status line.
+"   See :runtime syntax/colortest.vim
+" Args:
+"   -mode: The current mode : i for INSERT, r for REPLACE
+"
+" Returns:
+"   nothing
+function! InsertStatuslineColor(mode)
+  if a:mode == 'i'
+    hi StatusLine ctermbg=lightgreen
+  elseif a:mode == 'r'
+    hi StatusLine ctermbg=lightblue
+  else
+    hi StatusLine ctermbg=white
+  endif
+endfunction " }}}2
+
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertChange * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * call InsertStatuslineColor('')
+
+" to handle exiting insert mode via a control-C
+inoremap <c-c> <c-o>:call InsertStatuslineColor('')<cr><c-c>
+
+" default the statusline to green when entering Vim
+call InsertStatuslineColor(v:insertmode)
+
+" }}}1
+
+" vim: set foldmethod=marker:
