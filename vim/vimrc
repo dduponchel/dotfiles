@@ -34,6 +34,8 @@ set showcmd
 " Highlight searches (use <C-L> to temporarily turn off highlighting; see the
 " mapping of <C-L> below)
 set hlsearch
+" find the next match as we type the search
+set incsearch
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
@@ -105,6 +107,13 @@ map <a-right> <C-w>l
 set scrolloff=3
 " Start scrolling three columns before vertical border of window.
 set sidescrolloff=3
+
+
+" Highlight the screen line of the cursor
+" :set cursorline
+
+" mark the ideal max text width
+set colorcolumn=+1
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
