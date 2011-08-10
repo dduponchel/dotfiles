@@ -2,17 +2,31 @@
 
 FIFO=~/.xmonad/output
 
+init_fifo() {
+  if [ ! -p ${FIFO} ]
+  then
+    # if xmonad is launched first, the "fifo" will be a plain text file.
+    if [ -e ${FIFO} ]
+    then
+      echo >&2 "Warning : recreating the FIFO. Don't forget to restart xmonad."
+      rm -f ${FIFO}
+    fi
+    mkfifo -m 600 ${FIFO}
+  fi
+}
+
 # conkystatusbarrc needs to be in home for images
 cd ~
 
 lightweight_shell=sh
 if command_exists dash
 then
-   lightweight_shell=dash
+  lightweight_shell=dash
 fi
 
 case $1 in
   start)
+    init_fifo
 
     # bar :    |--   xmonad bar    --||-- conky bar --||-trayer-|
     # length : |     what's left     ||     fixed     || fixed  |
@@ -59,5 +73,5 @@ case $1 in
   *)
     echo "Usage: $0 {start|stop|restart}" >&2
     exit 1
-
+    ;;
 esac

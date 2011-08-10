@@ -22,8 +22,6 @@ case $session in
     ;;
   xmonad)
     xsetroot -cursor_name left_ptr &
-    FIFO=~/.xmonad/output
-    [ ! -p ${FIFO} ] && mkfifo -m 600 ${FIFO}
     statusbar start &
     xmonad & wmpid=$!
     ;;
