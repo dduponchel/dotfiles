@@ -40,6 +40,7 @@ relink bin
 relink mplayer
 
 relink git/gitconfig
+relink git/gitignore
 
 relink npm/npmrc
 

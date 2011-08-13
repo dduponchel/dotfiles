@@ -12,3 +12,5 @@
   whatsnew = "!git diff origin/$(git currentbranch)...HEAD"
   whatscoming = "!git diff HEAD...origin/$(git currentbranch)"
   currentbranch = "!git branch | grep \"^\\*\" | cut -d \" \" -f 2"
+[core]
+	excludesfile = ~/.gitignore

@@ -1,0 +1,5 @@
+# for vim helptags
+doc/tags
+
+*~
+.*.sw[a-z]
