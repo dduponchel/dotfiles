@@ -55,6 +55,7 @@ relink xmonad/dzen-icons
 relink vim/plugins .vim/bundle
 relink vim/pathogen/autoload .vim/autoload
 relink vim/vimrc
+mkdir -p .vim/{undo,swap}dir
 
 relink shell/zsh
 relink shell/profile .zprofile

@@ -2,4 +2,6 @@
 doc/tags
 
 *~
+# with dir and undodir defined in vimrc, we shouldn't get them.
 .*.sw[a-z]
+*.un~

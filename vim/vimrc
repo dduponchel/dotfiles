@@ -1,14 +1,15 @@
-filetype off
-call pathogen#runtime_append_all_bundles()
-filetype plugin on
-" call pathogen#helptags()
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+call pathogen#infect()
+filetype plugin indent on
+call pathogen#helptags()
 
 " colorscheme desert
 colorscheme vividchalk
 
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" have made, as well as sanely reset options when re-sourcing .vimrc
-set nocompatible
 " Attempt to determine the type of a file based on its name and possibly its
 " contents.  Use this to allow intelligent auto-indenting for each filetype
 " and for plugins that are filetype specific.
@@ -25,8 +26,18 @@ set hidden
 set showmatch
 set autowrite
 
+" When on, Vim automatically saves undo history to an undo file when
+" writing a buffer to a file, and restores undo history from the same
+" file on buffer read.
+set undofile
+" put undofile in one place, avoid polluting folders.
+set undodir=~/.vim/undodir
+" same thing for the swap file. The // does the trick, see :help dir
+set dir=~/.vim/swapdir//
+
 " Better command-line completion
 set wildmenu
+set wildmode=longest:full,full
 
 " Show partial commands in the last line of the screen
 set showcmd
@@ -108,6 +119,10 @@ set scrolloff=3
 " Start scrolling three columns before vertical border of window.
 set sidescrolloff=3
 
+"folding settings
+set foldmethod=indent "fold based on indent
+set foldnestmax=3 "deepest fold is 3 levels
+set nofoldenable "dont fold by default
 
 " Highlight the screen line of the cursor
 " :set cursorline
@@ -150,45 +165,88 @@ nmap <leader>u :GundoToggle<cr>
 " jmvc uses .ejs as template files
 autocmd BufNewFile,BufRead *.ejs set filetype=html
 
+" vimrc easy edit : reload it if changed.
+autocmd! bufwritepost vimrc source ~/.vimrc
 
 " Section: statusline {{{1
 " see :help 'statusline
 
 "statusline setup
-set statusline=%<%f " Path to the file in the buffer
+set statusline=
+set statusline+=%<%f\ "tail of the filename
 
-"display a warning if fileformat isnt unix
-function StatuslineWarnFileFormat(fileFormat)
-  if a:fileFormat != 'unix'
-    return '['.a:fileFormat.']'
-  else
-    return ''
-  endif
+" [filetype,encoding,format] {{{2
+set statusline+=[
+" filetype
+set statusline+=%{strlen(&ft)?&ft:'none'},
+" encoding
+function! StatuslineGetEncoding()
+ return strlen(&fenc)?&fenc:&enc
 endfunction
-set statusline+=%(\ %#warningmsg#%{StatuslineWarnFileFormat(&ff)}%*%)
+set statusline+=%#warningmsg#
+set statusline+=%{(StatuslineGetEncoding()!='utf-8')?StatuslineGetEncoding():''}
+set statusline+=%*
+set statusline+=%{(StatuslineGetEncoding()!='utf-8')?'':StatuslineGetEncoding()}
+set statusline+=,
+" file format
+set statusline+=%#warningmsg#
+set statusline+=%{&ff!='unix'?&ff:''}
+set statusline+=%*
+set statusline+=%{&ff!='unix'?'':&ff}
+set statusline+=]
+" }}}2
 
-"display a warning if file encoding isnt utf-8
-function StatuslineWarnEncoding(encoding)
-  if a:encoding != 'utf-8' && a:encoding != ''
-    return '['.a:encoding.']'
-  else
-    return ''
-  endif
+set statusline+=%r "read only flag
+set statusline+=%m "modified flag
+
+set statusline+=%{fugitive#statusline()}
+
+"display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%*
+
+" right side from the example
+set statusline+=%=%-14.(%l/%L,%c%V%)\ %P
+
+" mixed-indenting warning {{{2
+" found on https://github.com/scrooloose/vimfiles/blob/master/vimrc
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[&et]' if &et is set wrong
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let b:statusline_tab_warning = ''
+
+        if !&modifiable
+            return b:statusline_tab_warning
+        endif
+
+        let tabs = search('^\t', 'nw') != 0
+
+        "find spaces that arent used as alignment in the first indent column
+        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning = '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        endif
+    endif
+    return b:statusline_tab_warning
 endfunction
-set statusline+=%(\ %#warningmsg#%{StatuslineWarnEncoding(&fenc)}%*%)
-
-" flags : modified, read only, help and fugitive
-set statusline+=%(\ [%M%R%H%{fugitive#statusline()}]%)
-
-set statusline+=%= " right side
-" line number, column number, virtual column number and percentage of file
-set statusline+=%-14.(%l,%c%V%)\ %P
+" }}}2
 
 " }}}1
 
 " Section: statusline colors {{{1
 " Don't know myself if putting colors here is a good idea.
 " I will know soon enough.
+" The plugin ObviousMode does something similiar but isn't pathogen compliant.
 
 " Function: InsertStatuslineColor {{{2
 "   This function change the color of the status line.
@@ -200,9 +258,9 @@ set statusline+=%-14.(%l,%c%V%)\ %P
 "   nothing
 function! InsertStatuslineColor(mode)
   if a:mode == 'i'
-    hi StatusLine ctermbg=lightgreen
+    hi StatusLine ctermbg=52
   elseif a:mode == 'r'
-    hi StatusLine ctermbg=lightblue
+    hi StatusLine ctermbg=17
   else
     hi StatusLine ctermbg=white
   endif
@@ -215,8 +273,8 @@ au InsertLeave * call InsertStatuslineColor('')
 " to handle exiting insert mode via a control-C
 inoremap <c-c> <c-o>:call InsertStatuslineColor('')<cr><c-c>
 
-" default the statusline to green when entering Vim
-call InsertStatuslineColor(v:insertmode)
+" default the statusline when entering Vim
+call InsertStatuslineColor('')
 
 " }}}1
 
