@@ -5,6 +5,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -38,11 +39,10 @@ readInitProgram = do
   return $ read strInitProgram
 
 -- this startup hook will use the startup conf and spawn the processes
-myStartupHook :: Spawner -> X ()
-myStartupHook sp = do
+myStartupHook = do
     setWMName "LG3D" -- java...
     listInitProgram <- liftIO readInitProgram
-    mapM_ (\(InitProgram wid prg) -> spawnOn sp wid prg) listInitProgram
+    mapM_ (\(InitProgram wid prg) -> spawnOn wid prg) listInitProgram
 
 {-
  - That's it. Thank you Anthonin for this neat piece of code :)
@@ -78,10 +78,9 @@ myManageHook = composeAll
 {- spawn windows on launched workspace (instead of current workspace) -}
 myDmenu :: X ()
 myDmenu = do
-  sp <- mkSpawner
   currentWorkspace <- fmap W.currentTag (gets windowset)
-  {- spawnOn sp currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\"" -}
-  spawnOn sp currentWorkspace "exe=`IFS=:;lsx $PATH|sort -u|dmenu` && eval \"exec $exe\""
+  {- spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\"" -}
+  spawnOn currentWorkspace "exe=`IFS=:;lsx $PATH|sort -u|dmenu` && eval \"exec $exe\""
 
 
 -- Key bindings.
@@ -141,7 +140,7 @@ myLogHook namedPipe = dynamicLogWithPP defaultPP
   , ppUrgent  = dzenColor "red" "yellow" . pad
   , ppTitle   = dzenEscape
   , ppWsSep   = ""
-  } >> updatePointer (Relative 0.5 0.5)
+  } >> updatePointer (Relative 0.5 0.5) >> takeTopFocus
 
 -- Layouts
 myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
@@ -150,7 +149,6 @@ myLayout = (toggleLayouts $ noBorders Full) $ -- toggle fullscreen
 
 -- do the job
 main = do
-    sp <- mkSpawner
     dir <- getXMonadDir
     {- namedPipe <- openFile (dir ++ "/output") AppendMode -}
     {- AppendMode doesn't works, see http://www.haskell.org/haskellwiki/GHC:FAQ#When_I_open_a_FIFO_.28named_pipe.29_and_try_to_read_from_it.2C_I_get_EOF_immediately. -}
@@ -158,13 +156,13 @@ main = do
     namedPipe <- openFile (dir ++ "/output") ReadWriteMode
     hSetBuffering namedPipe LineBuffering
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
-        manageHook = manageSpawn sp <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
+        manageHook = manageSpawn <+> manageDocks <+> myManageHook <+> manageHook defaultConfig
         , terminal = myTerminal
         , modMask = myModMask
         , normalBorderColor="#000000"
         , focusedBorderColor="#009900"
         , borderWidth = 2
-        , startupHook = myStartupHook sp
+        , startupHook = myStartupHook
         , layoutHook = smartBorders (avoidStruts $ myLayout)
         , workspaces = myWorkspaces
         , keys = newKeys
