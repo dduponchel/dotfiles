@@ -1,4 +1,4 @@
-if ! infocmp &>/dev/null
+if command_exists infocmp && ! infocmp &>/dev/null
 then
   echo "WARN : this term ($TERM) is unknown, falling back to xterm"
   export TERM=xterm

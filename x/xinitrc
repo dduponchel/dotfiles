@@ -9,23 +9,15 @@
 echo "xinitrc : `date`"
 exec >> .session.log 2>> .session.err
 
-session=${1:-xmonad}
 # before starting xmonad, we want a correct X db and a running urxvt daemon
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
 
 nitrogen --restore &
 
-case $session in
-  fluxbox)
-    startfluxbox & wmpid=$!
-    ;;
-  xmonad)
-    xsetroot -cursor_name left_ptr &
-    statusbar start &
-    xmonad & wmpid=$!
-    ;;
-esac
+xsetroot -cursor_name left_ptr &
+statusbar start &
+xmonad & wmpid=$!
 
 resetxkbmap
 

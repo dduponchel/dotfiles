@@ -26,14 +26,11 @@ set hidden
 set showmatch
 set autowrite
 
-" When on, Vim automatically saves undo history to an undo file when
-" writing a buffer to a file, and restores undo history from the same
-" file on buffer read.
-set undofile
-" put undofile in one place, avoid polluting folders.
-set undodir=~/.vim/undodir
-" same thing for the swap file. The // does the trick, see :help dir
-set dir=~/.vim/swapdir//
+set undodir=~/.vim/tmp/undo//     " undo files
+set backupdir=~/.vim/tmp/backup// " backups
+set directory=~/.vim/tmp/swap//   " swap files
+set backup                        " enable backups
+set undofile                      " enable undo files
 
 " Better command-line completion
 set wildmenu
@@ -85,6 +82,19 @@ set t_vb=
 " "press <Enter> to continue"
 set cmdheight=2
 
+
+" Indicates a fast terminal connection.  More characters will be sent to
+" the screen for redrawing, instead of using insert/delete line
+" commands.  Improves smoothness of redrawing when there are multiple
+" windows and the terminal does not support a scrolling region.
+" Also enables the extra writing of characters at the end of each screen
+" line for lines that wrap.  This helps when using copy/paste with the
+" mouse in an xterm and other terminals.
+set ttyfast
+
+" Resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
 " Display line numbers on the left
 " set number
 
@@ -103,6 +113,7 @@ set pastetoggle=<F11>
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+set shiftround
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -114,15 +125,36 @@ map <a-down> <C-w>j
 map <a-up> <C-w>k
 map <a-right> <C-w>l
 
+" like j/k, but when 'wrap' on go N screen lines down/up.
+noremap j gj
+noremap k gk
+noremap <down> gj
+noremap <up> gk
+
 " Start scrolling three lines before horizontal border of window.
 set scrolloff=3
 " Start scrolling three columns before vertical border of window.
 set sidescrolloff=3
 
+" Virtual editing means that the cursor can be positioned where there is
+" no actual character.  This can be halfway into a tab or beyond the end
+" of the line.  Useful for selecting a rectangle in Visual mode and
+" editing a table.
+set virtualedit+=block
+
 "folding settings
 set foldmethod=indent "fold based on indent
 set foldnestmax=3 "deepest fold is 3 levels
 set nofoldenable "dont fold by default
+
+
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+
+
+
 
 " Highlight the screen line of the cursor
 " :set cursorline
@@ -140,6 +172,17 @@ nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>d :NERDTreeToggle<cr>
 nmap <leader>D :NERDTreeFind<cr>
 
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+
+au Filetype nerdtree setlocal nolist
+
+let NERDTreeHighlightCursorline=1
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+
 " BUNDLE: nerdcommenter
 
 " add a space between the comment delimiter and text
@@ -151,19 +194,11 @@ vmap <C-/> <ESC>:call NERDComment(1, "toggle")<CR>
 " but most vim implementations produce Control-_ instead of Control-/:
 nmap <C-_> :call NERDComment(0, "toggle")<CR>
 vmap <C-_> <ESC>:call NERDComment(1, "toggle")<CR>
-" and vim-gtk and vim-gnome are broken (:help vimsy-control-/)
-" you can use <leader>/ to do the same things.
-nmap <leader>/ :call NERDComment(0, "toggle")<CR>
-vmap <leader>/ <ESC>:call NERDComment(1, "toggle")<CR>
-" but maybe <leader>C is nicer to type?
-nmap <leader>C :call NERDComment(0, "toggle")<CR>
-vmap <leader>C <ESC>:call NERDComment(1, "toggle")<CR>
 
 " BUNDLE: Gundo
-nmap <leader>u :GundoToggle<cr>
+noremap  <F3> :GundoToggle<cr>
+inoremap <F3> <esc>:GundoToggle<cr>
 
-" jmvc uses .ejs as template files
-autocmd BufNewFile,BufRead *.ejs set filetype=html
 
 " vimrc easy edit : reload it if changed.
 autocmd! bufwritepost vimrc source ~/.vimrc
@@ -277,5 +312,69 @@ inoremap <c-c> <c-o>:call InsertStatuslineColor('')<cr><c-c>
 call InsertStatuslineColor('')
 
 " }}}1
+
+
+
+
+
+" Pulse {{{
+" found on https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv:call PulseCursorLine()<cr>
+nnoremap N Nzzzv:call PulseCursorLine()<cr>
+
+function! PulseCursorLine()
+    let current_window = winnr()
+
+    windo set nocursorline
+    execute current_window . 'wincmd w'
+
+    setlocal cursorline
+
+    redir => old_hi
+        silent execute 'hi CursorLine'
+    redir END
+    let old_hi = split(old_hi, '\n')[0]
+    let old_hi = substitute(old_hi, 'xxx', '', '')
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#444444 ctermbg=239
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#3a3a3a ctermbg=237
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#333333 ctermbg=235
+    redraw
+    sleep 20m
+
+    hi CursorLine guibg=#2a2a2a ctermbg=233
+    redraw
+    sleep 20m
+
+    execute 'hi ' . old_hi
+
+    windo set cursorline
+    execute current_window . 'wincmd w'
+endfunction
+
+" }}}
+
+
 
 " vim: set foldmethod=marker:
