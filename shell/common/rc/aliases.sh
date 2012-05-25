@@ -24,7 +24,6 @@ alias notepad++='wine "C:\Program Files\Notepad++\notepad++.exe"'
 command_exists rlwrap && alias telnet="rlwrap telnet $@"
 
 alias :q="exit"
-alias vim="vim -p"
 alias ss="sudo su -"
 
 

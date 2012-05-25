@@ -9,6 +9,7 @@ call pathogen#helptags()
 
 " colorscheme desert
 colorscheme vividchalk
+" colorscheme molokai
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents.  Use this to allow intelligent auto-indenting for each filetype
@@ -116,20 +117,33 @@ set expandtab
 set shiftround
 
 " Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-map <a-left> <C-w>h
-map <a-down> <C-w>j
-map <a-up> <C-w>k
-map <a-right> <C-w>l
+noremap <a-left>  <C-w>h
+noremap <a-down>  <C-w>j
+noremap <a-up>    <C-w>k
+noremap <a-right> <C-w>l
+noremap <a-h> <C-w>h
+noremap <a-j> <C-w>j
+noremap <a-k> <C-w>k
+noremap <a-l> <C-w>l
+noremap <s-h> :bN<cr>
+noremap <s-j> :bN<cr>
+noremap <s-k> :bn<cr>
+noremap <s-l> :bn<cr>
+noremap <s-left>  :bN<cr>
+noremap <s-down>  :bN<cr>
+noremap <s-up>    :bn<cr>
+noremap <s-right> :bn<cr>
 
 " like j/k, but when 'wrap' on go N screen lines down/up.
 noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
 
 " Start scrolling three lines before horizontal border of window.
 set scrolloff=3
@@ -199,182 +213,17 @@ vmap <C-_> <ESC>:call NERDComment(1, "toggle")<CR>
 noremap  <F3> :GundoToggle<cr>
 inoremap <F3> <esc>:GundoToggle<cr>
 
-
 " vimrc easy edit : reload it if changed.
 autocmd! bufwritepost vimrc source ~/.vimrc
 
-" Section: statusline {{{1
-" see :help 'statusline
+" BUNDLE: vim-powerline
+let g:Powerline_symbols = 'fancy'
+" don't need to see the mode in the command line if we have vim-powerline
+" enabled
+set noshowmode
 
-"statusline setup
-set statusline=
-set statusline+=%<%f\ "tail of the filename
-
-" [filetype,encoding,format] {{{2
-set statusline+=[
-" filetype
-set statusline+=%{strlen(&ft)?&ft:'none'},
-" encoding
-function! StatuslineGetEncoding()
- return strlen(&fenc)?&fenc:&enc
-endfunction
-set statusline+=%#warningmsg#
-set statusline+=%{(StatuslineGetEncoding()!='utf-8')?StatuslineGetEncoding():''}
-set statusline+=%*
-set statusline+=%{(StatuslineGetEncoding()!='utf-8')?'':StatuslineGetEncoding()}
-set statusline+=,
-" file format
-set statusline+=%#warningmsg#
-set statusline+=%{&ff!='unix'?&ff:''}
-set statusline+=%*
-set statusline+=%{&ff!='unix'?'':&ff}
-set statusline+=]
-" }}}2
-
-set statusline+=%r "read only flag
-set statusline+=%m "modified flag
-
-set statusline+=%{fugitive#statusline()}
-
-"display a warning if &et is wrong, or we have mixed-indenting
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%*
-
-" right side from the example
-set statusline+=%=%-14.(%l/%L,%c%V%)\ %P
-
-" mixed-indenting warning {{{2
-" found on https://github.com/scrooloose/vimfiles/blob/master/vimrc
-
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-"return '[&et]' if &et is set wrong
-"return '[mixed-indenting]' if spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let b:statusline_tab_warning = ''
-
-        if !&modifiable
-            return b:statusline_tab_warning
-        endif
-
-        let tabs = search('^\t', 'nw') != 0
-
-        "find spaces that arent used as alignment in the first indent column
-        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
-
-        if tabs && spaces
-            let b:statusline_tab_warning = '[mixed-indenting]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-" }}}2
-
-" }}}1
-
-" Section: statusline colors {{{1
-" Don't know myself if putting colors here is a good idea.
-" I will know soon enough.
-" The plugin ObviousMode does something similiar but isn't pathogen compliant.
-
-" Function: InsertStatuslineColor {{{2
-"   This function change the color of the status line.
-"   See :runtime syntax/colortest.vim
-" Args:
-"   -mode: The current mode : i for INSERT, r for REPLACE
-"
-" Returns:
-"   nothing
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    hi StatusLine ctermbg=52
-  elseif a:mode == 'r'
-    hi StatusLine ctermbg=17
-  else
-    hi StatusLine ctermbg=white
-  endif
-endfunction " }}}2
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * call InsertStatuslineColor('')
-
-" to handle exiting insert mode via a control-C
-inoremap <c-c> <c-o>:call InsertStatuslineColor('')<cr><c-c>
-
-" default the statusline when entering Vim
-call InsertStatuslineColor('')
-
-" }}}1
-
-
-
-
-
-" Pulse {{{
-" found on https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc
-
-" Keep search matches in the middle of the window and pulse the line when moving
-" to them.
-nnoremap n nzzzv:call PulseCursorLine()<cr>
-nnoremap N Nzzzv:call PulseCursorLine()<cr>
-
-function! PulseCursorLine()
-    let current_window = winnr()
-
-    windo set nocursorline
-    execute current_window . 'wincmd w'
-
-    setlocal cursorline
-
-    redir => old_hi
-        silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    hi CursorLine guibg=#2a2a2a ctermbg=233
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#333333 ctermbg=235
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#3a3a3a ctermbg=237
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#444444 ctermbg=239
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#3a3a3a ctermbg=237
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#333333 ctermbg=235
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#2a2a2a ctermbg=233
-    redraw
-    sleep 20m
-
-    execute 'hi ' . old_hi
-
-    windo set cursorline
-    execute current_window . 'wincmd w'
-endfunction
-
-" }}}
-
-
+" Keep search matches in the middle of the window
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " vim: set foldmethod=marker:

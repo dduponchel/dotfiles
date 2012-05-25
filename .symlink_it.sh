@@ -68,6 +68,9 @@ relink shell/common .shell
 relink ackrc
 relink tmux.conf
 
+relink fonts
+echo "don't forget to run fc-cache -vf if the fonts changed"
+
 # quodlibet plugins : not the ideal way to handle my changes...
 relink {,.}quodlibet/plugins/editing/iconv.py
 relink {,.}quodlibet/plugins/songsmenu/openwith.py

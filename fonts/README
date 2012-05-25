@@ -1,0 +1,9 @@
+This is the inconsolata font :
+# pacman -Qi ttf-inconsolata
+Name           : ttf-inconsolata
+Version        : 20090215-3
+URL            : http://levien.com/type/myfonts/inconsolata.html
+Licenses       : custom:OFL
+
+Patched with the fontpatcher of vim-powerline, see
+https://github.com/Lokaltog/vim-powerline/tree/develop/fontpatcher

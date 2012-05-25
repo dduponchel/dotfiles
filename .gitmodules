@@ -46,3 +46,12 @@
 [submodule "vim/plugins/Command-T"]
 	path = vim/plugins/Command-T
 	url = https://github.com/wincent/Command-T.git
+[submodule "vim/plugins/minibufexpl"]
+	path = vim/plugins/minibufexpl
+	url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "vim/plugins/vim-powerline"]
+	path = vim/plugins/vim-powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "vim/plugins/tabular"]
+	path = vim/plugins/tabular
+	url = https://github.com/godlygeek/tabular.git
