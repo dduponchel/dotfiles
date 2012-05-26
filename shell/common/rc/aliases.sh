@@ -53,3 +53,6 @@ take() {
 alias l='ls -la'
 alias ll='ls -l'
 alias sl=ls # often screw this up
+
+# firefox's addon sdk
+alias addon-sdk="cd /opt/addon-sdk && source bin/activate; cd -"
