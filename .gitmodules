@@ -31,9 +31,6 @@
 [submodule "vim/plugins/vim-coffee-script"]
 	path = vim/plugins/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "vim/plugins/vim-css-color"]
-	path = vim/plugins/vim-css-color
-	url = https://github.com/skammer/vim-css-color.git
 [submodule "vim/plugins/snipmate"]
 	path = vim/plugins/snipmate
 	url = https://github.com/msanders/snipmate.vim
