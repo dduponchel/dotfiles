@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/usr/bin/xscreensaver-getimage-file $@|tee -a ~/.xscreensaver-getimage-file.log
