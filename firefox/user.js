@@ -16,3 +16,9 @@ user_pref("browser.urlbar.formatting.enabled", false);
 
 // don't hide the http:// prefix (added with bugzilla 665580)
 user_pref("browser.urlbar.trimURLs", false);
+
+// don't load automatically all the plugins on all the pages
+user_pref("plugins.click_to_play", true);
+
+// enable telemetry if available
+user_pref("toolkit.telemetry.enabled", true);
