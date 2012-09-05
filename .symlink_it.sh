@@ -39,8 +39,11 @@ relink bin
 
 relink mplayer
 
+# with git >= 1.7.12
+relink git/gitconfig .config/git/config
+relink git/gitignore .config/git/ignore
+# compat with git < 1.7.12
 relink git/gitconfig
-relink git/gitignore
 
 relink npm/npmrc
 
