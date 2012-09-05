@@ -1,3 +1,32 @@
 #!/usr/bin/env bash
 
-/usr/bin/xscreensaver-getimage-file $@|tee -a ~/.xscreensaver-getimage-file.log
+MAX_ITER=10
+current_iter=0
+
+function imageSizeIsOK {
+  MIN_WIDTH=1200
+  eval `identify -format "width=%w;height=%h" "$1"`
+  [[ $width -ge $MIN_WIDTH && $width -ge $height ]]
+  return $?
+}
+
+while [[ $current_iter -lt $MAX_ITER ]]
+do
+  current_iter=$((current_iter + 1))
+
+  file=`/usr/bin/xscreensaver-getimage-file $@`
+  if [ $? -ne 0 ]
+  then
+    exit 1
+  fi
+
+  # TODO $1 SHOULD be --name, $2 SHOULD be the path
+  if imageSizeIsOK "$2/$file"
+  then
+    echo $file
+    exit 0
+  fi
+done |tee -a ~/.xscreensaver-getimage-file.log
+
+# still here ? no luck then
+exit 1

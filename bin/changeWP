@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
-if ! type nitrogen &>/dev/null
+if ! command_exists nitrogen
 then
   echo "nitrogen not found"
+  exit 1
+fi
+if ! command_exists xscreensaver-getimage-file
+then
+  echo "xscreensaver-getimage-file not found"
   exit 1
 fi
 
 WP_LOCATION=~/wp
 NITROGEN_LOCATION=~/.config/nitrogen/bg-saved.cfg
 
-RANDOM=`date +%s`
-
-# ls $WP_LOCATION/*|shuf|head -n 1 is shorter, but shuf is not everywhere...
 randomFile () {
-  for i in $WP_LOCATION/*
-  do
-    echo "$RANDOM $i"
-  done | sort | head -n 1 | sed -r "s/^[0-9]+ // "
+  echo -n "$WP_LOCATION/"
+  xscreensaver-getimage-file --name "$WP_LOCATION"
 }
 
 cat $NITROGEN_LOCATION | while read line
