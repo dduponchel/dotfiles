@@ -22,3 +22,10 @@ user_pref("plugins.click_to_play", true);
 
 // enable telemetry if available
 user_pref("toolkit.telemetry.enabled", true);
+
+// don't put the tabs above the bookmarks
+user_pref("browser.tabs.onTop", false);
+
+// don't use inline autocomplete
+// http://kb.mozillazine.org/Inline_autocomplete
+user_pref("browser.urlbar.autoFill", false);

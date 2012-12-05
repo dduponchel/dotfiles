@@ -4,6 +4,7 @@ then
   export TERM=xterm
 fi
 
+# update window title if possible
 if [ -n "$DISPLAY" ]
 then
   preexec () {

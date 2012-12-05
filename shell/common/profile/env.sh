@@ -4,9 +4,6 @@ export BROWSER=firefox
 
 export PAGER="less -FRX"
 
-export GREP_OPTIONS='--color=auto'
-#export GREP_COLOR='1;32'
-
 export PATH=~/.bin:~/.cabal/bin:~/.local/bin:$PATH
 
 # see man bash

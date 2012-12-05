@@ -79,8 +79,10 @@ myManageHook = composeAll
 myDmenu :: X ()
 myDmenu = do
   currentWorkspace <- fmap W.currentTag (gets windowset)
-  {- spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\"" -}
-  spawnOn currentWorkspace "exe=`IFS=:;lsx $PATH|sort -u|dmenu` && eval \"exec $exe\""
+  spawnOn currentWorkspace "exe=`dmenu_path | dmenu ` && eval \"exec $exe\""
+  -- Use the lastest sources ! I need this commit :
+  -- http://git.suckless.org/dmenu/commit/?id=dec9a28863f388072be105e0950deb72ac719d48
+  -- The current version (4.5) isn't good for my usecase : dmenu_path doesn't exist.
 
 
 -- Key bindings.
@@ -90,8 +92,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     {-- I must NOT fail to lock my session, even in azerty : my coworkers are quick ;-) --}
     , ((modMask .|. shiftMask, xK_w),  spawn "resetxkbmap && xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
-    , ((modMask, xK_Insert),           spawn "amixer -c 0 set Master 2dB+")
-    , ((modMask, xK_Delete),           spawn "amixer -c 0 set Master 1dB-")
+    , ((modMask, xK_Insert),           spawn "amixer set Master 2%+")
+    , ((modMask, xK_Delete),           spawn "amixer set Master 2%-")
     , ((modMask, xK_Page_Up),          spawn "quodlibet --previous")
     , ((modMask, xK_Page_Down),        spawn "quodlibet --next")
     , ((modMask, xK_Home),             spawn "quodlibet --play-pause")

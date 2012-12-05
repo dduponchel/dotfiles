@@ -4,4 +4,4 @@ submodules:
 install: submodules
 	./.symlink_it.sh
 
-.PHONY: install
+.PHONY: submodules install

@@ -6,8 +6,10 @@
 # reading only $ZDOTDIR/.zshenv (if zsh) or $BASH_ENV (if bash)
 
 # my logs have nothing to do in /var/log/slim.log
-echo "xinitrc : `date`"
 exec >> .session.log 2>> .session.err
+# broadcast the date in the log files
+echo      "xinitrc : `date`"
+echo 1>&2 "xinitrc : `date`"
 
 # before starting xmonad, we want a correct X db and a running urxvt daemon
 xrdb -merge ~/.Xresources
@@ -35,4 +37,5 @@ fi
 
 wait $wmpid # like exec myWM but more flexible
 
-pkill -HUP ssh-agent
+keychain --stop all
+# pkill -HUP ssh-agent
