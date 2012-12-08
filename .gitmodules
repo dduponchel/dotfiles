@@ -52,3 +52,6 @@
 [submodule "vim/plugins/tabular"]
 	path = vim/plugins/tabular
 	url = https://github.com/godlygeek/tabular.git
+[submodule "x/xcompose"]
+	path = x/xcompose
+	url = https://github.com/kragen/xcompose

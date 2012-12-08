@@ -11,3 +11,8 @@ export BASH_ENV=~/.bash_profile
 
 # a tmux within a tmux within a tmux ...
 [[ -n "$TMUX" ]] && unset TMUX
+
+# Hey GTK : use X Input Method !
+# see http://canonical.org/~kragen/setting-up-keyboard.html
+export GTK_IM_MODULE=xim
+

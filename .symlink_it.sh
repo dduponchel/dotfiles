@@ -50,6 +50,7 @@ relink npm/npmrc
 relink x/conkyrc
 relink x/xinitrc
 relink x/Xresources
+relink x/xcompose/dotXCompose .XCompose
 
 relink {,.}xmonad/xmonad.hs
 relink xmonad/conkystatusbarrc
