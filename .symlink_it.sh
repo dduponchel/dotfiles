@@ -47,8 +47,8 @@ relink git/gitconfig
 
 relink npm/npmrc
 
-relink x/conkyrc
 relink x/xinitrc
+relink x/xinitrc .xsession
 relink x/Xresources
 relink x/xcompose/dotXCompose .XCompose
 
@@ -62,9 +62,10 @@ relink vim/vimrc
 mkdir -p .vim/tmp/{undo,backup,swap}
 
 relink shell/zsh
-relink shell/profile .zprofile
 # for bash compatibility, and xinitrc (see comments)
+relink shell/profile
 relink shell/profile .bash_profile
+relink shell/profile .zprofile
 relink shell/bashrc
 relink shell/zshrc
 relink shell/common .shell

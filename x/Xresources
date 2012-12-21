@@ -33,7 +33,7 @@ urxvt.color14: #23D9E0
 urxvt.color15: #FFFFFF
 
 
-*visualBell:                on
+*visualBell:                off
 *.urgentOnBell:             true
 *saveLines:                 16000
 
