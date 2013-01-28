@@ -10,6 +10,18 @@ function imageSizeIsOK {
   return $?
 }
 
+if [ ! -x /usr/bin/xscreensaver-getimage-file ]
+then
+  echo >&2 "xscreensaver-getimage-file not found"
+  exit 1
+fi
+
+if ! command_exists identify
+then
+  echo >&2 "identify (imagemagick) not found"
+  exit 1
+fi
+
 while [[ $current_iter -lt $MAX_ITER ]]
 do
   current_iter=$((current_iter + 1))

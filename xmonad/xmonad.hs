@@ -1,4 +1,5 @@
 import XMonad
+import Graphics.X11.ExtraTypes.XF86
 import System.IO
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
@@ -92,7 +93,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
     {-- I must NOT fail to lock my session, even in azerty : my coworkers are quick ;-) --}
     , ((modMask .|. shiftMask, xK_w),  spawn "resetxkbmap && xscreensaver-command -lock")
     , ((0, xK_Print),                  spawn "scrot")
+    , ((0, xF86XK_AudioRaiseVolume),   spawn "amixer set Master 2%+")
     , ((modMask, xK_Insert),           spawn "amixer set Master 2%+")
+    , ((0, xF86XK_AudioLowerVolume),   spawn "amixer set Master 2%-")
     , ((modMask, xK_Delete),           spawn "amixer set Master 2%-")
     , ((modMask, xK_Page_Up),          spawn "quodlibet --previous")
     , ((modMask, xK_Page_Down),        spawn "quodlibet --next")

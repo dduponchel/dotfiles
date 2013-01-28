@@ -2,12 +2,12 @@
 
 if ! command_exists nitrogen
 then
-  echo "nitrogen not found"
+  echo >&2 "nitrogen not found"
   exit 1
 fi
 if ! command_exists xscreensaver-getimage-file
 then
-  echo "xscreensaver-getimage-file not found"
+  echo >&2 "xscreensaver-getimage-file not found"
   exit 1
 fi
 

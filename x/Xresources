@@ -3,10 +3,10 @@
 ! font patched for powerline,
 ! see https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts
 !!
-*faceName:                  xft:Inconsolata:pixelsize=18
-*font:                      xft:Inconsolata:pixelsize=18
+*faceName:                  xft:Inconsolata:pixelsize=15
+*font:                      xft:Inconsolata:pixelsize=15
 ! the patched font seems to crash some GUI (first try : gitk).
-urxvt*font:                 xft:Inconsolata for Powerline:pixelsize=17
+urxvt*font:                 xft:Inconsolata for Powerline:pixelsize=15
 
 ! *background is too generic and affect QT interfaces as well
 urxvt*background:                #000000
@@ -58,7 +58,11 @@ URxvt*print-pipe:           cat > $(TMPDIR=$HOME mktemp urxvt.XXXXXX)
 URxvt*fading:               50
 URxvt*pointerBlank:         true
 URxvt*perl-ext-common:      default,matcher
+
+
 URxvt*urlLauncher:          firefox
+! in urxvt 9.16, this was renamed url-launcher.
+URxvt*url-launcher:         firefox
 
 ! behavior of the scroll bar :
 ! do not scroll on output, but scroll on keypress.
