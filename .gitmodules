@@ -55,3 +55,6 @@
 [submodule "x/xcompose"]
 	path = x/xcompose
 	url = https://github.com/kragen/xcompose
+[submodule "external/dmenu"]
+	path = external/dmenu
+	url = http://git.suckless.org/dmenu
