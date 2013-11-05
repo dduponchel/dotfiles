@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -eu
+
+for i in "$@"
+do
+  echo -n "$i ..."
+  mogrify -strip -resize 1500x1500\> "$i"
+  echo "done"
+done
