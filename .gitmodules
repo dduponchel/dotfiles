@@ -58,3 +58,6 @@
 [submodule "external/dmenu"]
 	path = external/dmenu
 	url = http://git.suckless.org/dmenu
+[submodule "vim/plugins/syntastic"]
+	path = vim/plugins/syntastic
+	url = https://github.com/scrooloose/syntastic.git
