@@ -15,7 +15,7 @@ echo 1>&2 "xinitrc : `date`"
 xrdb -merge ~/.Xresources
 urxvtd -q -f -o
 
-nitrogen --restore &
+bash ~/.fehbg
 
 xsetroot -cursor_name left_ptr &
 statusbar start &

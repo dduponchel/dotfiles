@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if ! command_exists nitrogen
+set -eu
+
+if ! command_exists feh
 then
-  echo >&2 "nitrogen not found"
+  echo >&2 "feh not found"
   exit 1
 fi
 if ! command_exists xscreensaver-getimage-file
@@ -12,23 +14,12 @@ then
 fi
 
 WP_LOCATION=~/wp
-NITROGEN_LOCATION=~/.config/nitrogen/bg-saved.cfg
 
 randomFile () {
   echo -n "$WP_LOCATION/"
   xscreensaver-getimage-file --name "$WP_LOCATION"
 }
 
-cat $NITROGEN_LOCATION | while read line
-do
-  if [[ $line =~ ^file= ]]
-  then
-    echo "file=`randomFile`"
-  else
-    echo $line
-  fi
-done > $NITROGEN_LOCATION.tmp
+# for two screens, works with one too
+feh --bg-max "$(randomFile)" "$(randomFile)"
 
-mv $NITROGEN_LOCATION{.tmp,}
-
-nitrogen --restore
