@@ -19,6 +19,7 @@ user_pref("browser.urlbar.trimURLs", false);
 
 // don't load automatically all the plugins on all the pages
 user_pref("plugins.click_to_play", true);
+user_pref("plugin.state.flash", 1); // firefox 23
 
 // enable telemetry if available
 user_pref("toolkit.telemetry.enabled", true);
@@ -29,3 +30,12 @@ user_pref("browser.tabs.onTop", false);
 // don't use inline autocomplete
 // http://kb.mozillazine.org/Inline_autocomplete
 user_pref("browser.urlbar.autoFill", false);
+
+// I don't use the about:newtab feature, let me use the good old about:blank
+user_pref("browser.newtab.url", "about:blank");
+
+// saving screenshot of websites I visit ? seriously ?
+user_pref("browser.pagethumbnails.capturing_disabled", true);
+
+// disable third party cookie
+user_pref("network.cookie.cookieBehavior", 1);
