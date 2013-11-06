@@ -61,3 +61,6 @@
 [submodule "vim/plugins/syntastic"]
 	path = vim/plugins/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim/plugins/tern_for_vim"]
+	path = vim/plugins/tern_for_vim
+	url = https://github.com/marijnh/tern_for_vim
