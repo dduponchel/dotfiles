@@ -64,3 +64,9 @@
 [submodule "vim/plugins/tern_for_vim"]
 	path = vim/plugins/tern_for_vim
 	url = https://github.com/marijnh/tern_for_vim
+[submodule "vim/plugins/delimitMate"]
+	path = vim/plugins/delimitMate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule "vim/plugins/YouCompleteMe"]
+	path = vim/plugins/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe

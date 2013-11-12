@@ -226,4 +226,14 @@ set noshowmode
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" BUNDLE: syntastic
+let g:syntastic_check_on_open=1
+
+" BUNDLE: delimitMate
+let g:delimitMate_expand_cr = 1
+
+" BUNDLE: YouCompleteMe
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
 " vim: set foldmethod=marker:

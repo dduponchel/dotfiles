@@ -3,7 +3,7 @@ deps: submodules
 	chmod +x external/dmenu/dmenu_path
 
 submodules:
-	! [ -d .git ] || git submodule update --init
+	! [ -d .git ] || git submodule update --init --recursive
 
 install: submodules deps
 	./.symlink_it.sh
